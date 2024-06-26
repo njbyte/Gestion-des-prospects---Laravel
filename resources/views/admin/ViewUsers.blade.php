@@ -44,13 +44,13 @@
 <body>
     <div class="container">
         <h1 class="mb-4">Users</h1>
-        <a href="{{ route('admin.users.create') }}"  style="display: inline-block; font-weight: 400; color: #fff; text-align: center;
-          vertical-align: middle; user-select: none; background-color: #007bff;
-          border: 1px solid transparent; padding: 0.375rem 0.75rem; font-size: 1rem;
-          line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out,
-          background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-          box-shadow 0.15s ease-in-out; text-decoration: none; position: relative;
-          overflow: hidden;">
+        <a href="{{ route('admin.users.create') }}"  style="margin-bottom: 20px;margin-left: 87%; display: inline-block; font-weight: 400; color: #fff; text-align: center;
+              vertical-align: middle; user-select: none; background-color: #139C49;
+              border: 1px solid transparent; padding: 0.375rem 0.75rem; font-size: 1rem;
+              line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out,
+              background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+              box-shadow 0.15s ease-in-out; text-decoration: none; position: relative;
+              overflow: hidden;">
     Create New User
 </a>
 
@@ -78,18 +78,30 @@
                             @elseif ($user->role == 1)
                                 Qualificateur
                             @else
-                                Coemmercial
+                                Commercial
                             @endif
                         </td>
                         <td>{{ $user->created_at }}</td>
                         <td>{{ $user->updated_at }}</td>
                         <td class="actions">
                             <!-- Example of edit and delete links/buttons -->
-                            <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" style="margin-bottom:20px;display: inline-block; font-weight: 400; color: #fff; text-align: center;
+          vertical-align: middle; user-select: none; background-color: #11101D;
+          border: 1px solid transparent; padding: 0.375rem 0.75rem; font-size: 1rem;
+          line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out,
+          background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+          box-shadow 0.15s ease-in-out; text-decoration: none; position: relative;
+          overflow: hidden;">Edit</a>
                             <form action="{{ route('admin.users.destroy', ['user' => $user->id]) }}" method="POST" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                                <button type="submit" style="margin-bottom:20px;display: inline-block; font-weight: 400; color: #fff; text-align: center;
+          vertical-align: middle; user-select: none; background-color: #D1485F;
+          border: 1px solid transparent; padding: 0.375rem 0.75rem; font-size: 1rem;
+          line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out,
+          background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+          box-shadow 0.15s ease-in-out; text-decoration: none; position: relative;
+          overflow: hidden;" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
                             </form>
                         </td>
                     </tr>

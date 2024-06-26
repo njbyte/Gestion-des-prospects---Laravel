@@ -5,6 +5,8 @@
     <style>
         .container {
             margin-top: 50px;
+            margin-left:20px;
+            margin-right:20px;
         }
         table {
             width: 100%;
@@ -42,7 +44,16 @@
 <body>
     <div class="container">
         <h1 class="mb-4">Users</h1>
-        <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3">Create New User</a>
+        <a href="{{ route('admin.users.create') }}"  style="display: inline-block; font-weight: 400; color: #fff; text-align: center;
+          vertical-align: middle; user-select: none; background-color: #007bff;
+          border: 1px solid transparent; padding: 0.375rem 0.75rem; font-size: 1rem;
+          line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out,
+          background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+          box-shadow 0.15s ease-in-out; text-decoration: none; position: relative;
+          overflow: hidden;">
+    Create New User
+</a>
+
         <table class="table table-bordered">
             <thead>
                 <tr>

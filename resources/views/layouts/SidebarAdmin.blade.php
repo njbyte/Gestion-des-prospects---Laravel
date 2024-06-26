@@ -378,7 +378,14 @@
         <div class="profile_name">@yield('profilename')</div>
         <div class="job">Admin</div>
       </div>
-      <i class='bx bx-log-out' ></i>
+      <form method="POST" action="{{ route('logout') }}" id="logoutForm">
+    @csrf
+    <x-dropdown-link :href="route('logout')"
+        onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
+        <i class='bx bx-log-out'></i>
+    </x-dropdown-link>
+</form>
+
     </div>
   </li>
 </ul>

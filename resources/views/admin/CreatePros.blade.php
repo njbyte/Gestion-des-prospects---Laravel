@@ -69,9 +69,9 @@
 }
 </style>
 <div class="container mt-5">
-        <h1>Create New User</h1>
+        <h1>Create New Prospect</h1>
 
-        <form method="POST" action="{{ route('admin.users.store') }}">
+        <form method="POST" action="{{ route('admin.prospect.store') }}">
             @csrf
 
             <div class="mb-3">
@@ -85,20 +85,20 @@
             </div>
 
             <div class="mb-3">
-                <label for="role" class="form-label">Role</label>
-                <select class="form-select" id="role" name="role" required>
-                    <option value="0">Admin</option>
-                    <option value="1">Qualificateur</option>
-                    <option value="2">Commercial</option>
+                <label for="role" class="form-label">Status</label>
+                <select class="form-select" id="status" name="status" required>
+                    <option value="0">Nouveau</option>
+                    <option value="1">Qualifié</option>
+                    <option value="2">Rejeté</option>
+                    <option value="3">Converti</option>
+                    <option value="4">Cloturé</option>
+
                 </select>
             </div>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
 
-            <button type="submit" class="btn btn-primary">Create User</button>
+
+            <button type="submit" class="btn btn-primary">Create Prospect</button>
         </form>
     </div>
 @endsection

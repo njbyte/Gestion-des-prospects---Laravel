@@ -1,10 +1,8 @@
-<!-- resources/views/users/create.blade.php -->
-
 @extends('layouts.SidebarAdmin')
 
 @section('content')
 <style>
-    /* custom.css */
+/* custom.css */
 
 /* Form container */
 .container {
@@ -57,50 +55,52 @@
     background-color: #0056b3;
 }
 
+/* Center the button */
+.btn-primary {
+    display: block;
+    margin: 0 auto;
+}
+
 /* Error styles (customize as needed) */
 .has-error .form-control {
     border-color: #ff0000;
 }
 
 /* Add any other custom styles you'd like! */
-.btn-primary {
-    display: block;
-    margin: 0 auto;
-}
-</style>
-<div class="container mt-5">
-        <h1>Create New User</h1>
 
-        <form method="POST" action="{{ route('admin.users.store') }}">
+</style>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Edit Prospect</h1>
+        <form method="POST" action="{{ route('admin.prospect.update', $prospect->id) }}">
             @csrf
+            @method('PUT')
 
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <input type="text" class="form-control" id="name" name="name" value="{{ $prospect->name }}" required>
             </div>
 
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" value="{{ $prospect->email }}" required>
             </div>
 
             <div class="mb-3">
-                <label for="role" class="form-label">Role</label>
-                <select class="form-select" id="role" name="role" required>
-                    <option value="0">Admin</option>
-                    <option value="1">Qualificateur</option>
-                    <option value="2">Commercial</option>
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select" id="status" name="status" required>
+                    <option value="0" {{ $prospect->status == 0 ? 'selected' : '' }}>Nouveau</option>
+                    <option value="1" {{ $prospect->status == 1 ? 'selected' : '' }}>Qualifié</option>
+                    <option value="2" {{ $prospect->status == 2 ? 'selected' : '' }}>Rejeté</option>
+                    <option value="3" {{ $prospect->status == 3 ? 'selected' : '' }}>Converti</option>
+                    <option value="4" {{ $prospect->status == 4 ? 'selected' : '' }}>Cloturé</option>
                 </select>
             </div>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Create User</button>
+            <button type="submit" class="btn btn-primary">Update Prospect</button>
         </form>
     </div>
+</body>
 @endsection
 
 @section('profilename')

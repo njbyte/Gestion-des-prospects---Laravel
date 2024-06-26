@@ -2,87 +2,71 @@
 
 @section('content')
 <style>
-    #main.flexbox-col.unique {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f8f9fa;
-    margin: 0;
-}
+   /* custom.css */
 
-#main.flexbox-col.unique .container {
+/* Form container */
+.container {
     max-width: 600px;
-    width: 100%;
-    background: #ffffff;
+    margin: 0 auto;
     padding: 20px;
+    background-color: #f9f9f9;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#main.flexbox-col.unique h1 {
-    color: #333333;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-#main.flexbox-col.unique .form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-#main.flexbox-col.unique .form-label {
+/* Form labels */
+.form-label {
     font-weight: 600;
-    color: #555555;
-    margin-bottom: 5px;
-    display: block;
+    margin-bottom: 8px;
 }
 
-#main.flexbox-col.unique .form-control {
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    padding: 10px;
-    font-size: 16px;
+/* Form input fields */
+.form-control {
     width: 100%;
-    box-sizing: border-box;
-}
-
-#main.flexbox-col.unique .form-control:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-#main.flexbox-col.unique .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #ccc;
     border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+/* Form select dropdown */
+.form-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+/* Form submit button */
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
     cursor: pointer;
+    font-size: 16px;
 }
 
-#main.flexbox-col.unique .btn-primary:hover {
+.btn-primary:hover {
     background-color: #0056b3;
-    border-color: #004085;
 }
 
-#main.flexbox-col.unique .mt-3 {
-    margin-top: 1rem;
+/* Center the button */
+.btn-primary {
+    display: block;
+    margin: 0 auto;
 }
 
-#main.flexbox-col.unique .mt-5 {
-    margin-top: 3rem;
+/* Error styles (customize as needed) */
+.has-error .form-control {
+    border-color: #ff0000;
 }
 
-#main.flexbox-col.unique .mb-3,
-#main.flexbox-col.unique .mb-4 {
-    margin-bottom: 1rem;
-}
-
-#main.flexbox-col.unique .mb-4 {
-    margin-bottom: 1.5rem;
-}
+/* Add any other custom styles you'd like! */
 
 </style>
 <body>

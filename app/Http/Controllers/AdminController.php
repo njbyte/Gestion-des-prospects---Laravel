@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use App\Models\Pros;
 class AdminController extends Controller
 {
     public function index()
@@ -15,6 +15,14 @@ class AdminController extends Controller
         // Pass users to the view
         return view('admin.ViewUsers', compact('users'));
     }
+    public function viewprospects()
+    {
+        // Fetch all users
+        $prospects = Pros::all();
+
+        // Pass users to the view
+        return view('admin.ViewProspects', compact('prospects'));
+    }
 
     public function create()
     {
@@ -23,7 +31,12 @@ class AdminController extends Controller
         return view('admin.CreateUser');
     }
 
-
+    public function createPros()
+    {
+        // Logic to show create Pros form
+        // Example:
+        return view('admin.CreatePros');
+    }
     public function store(Request $request)
     {
         // Validate request data
@@ -45,9 +58,35 @@ class AdminController extends Controller
 
         return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
+
+    public function storePros(Request $request)
+    {
+        // Validate request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:prospects,email',
+            'status' => 'required|in:0,1,2,3,4',
+
+        ]);
+
+        // Create new Pros
+        Pros::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'status' => $validatedData['status'],
+
+        ]);
+
+
+        return redirect()->route('admin.prospects')->with('success', 'Prospect created successfully.');
+    }
     public function edit(User $user)
     {
         return view('admin.EditUser', compact('user'));
+    }
+    public function editPros(Pros $prospect)
+    {
+        return view('admin.EditPros', compact('prospect'));
     }
 
     public function update(Request $request, User $user)
@@ -70,6 +109,27 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+    }
+
+    public function updatePros(Request $request, Pros $prospect)
+    {
+        // Validate request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $prospect->id,
+            'status' => 'required|in:0,1,2,3,4',
+
+        ]);
+
+        // Update Prospect
+        $prospect->update([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'status' => $validatedData['status'],
+
+        ]);
+
+        return redirect()->route('admin.prospects')->with('success', 'Prospect updated successfully.');
     }
 
     public function destroy(User $user)

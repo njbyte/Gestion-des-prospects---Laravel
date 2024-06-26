@@ -31,6 +31,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/admin/ViewUsers/{user}', [AdminController::class, 'update'])->name('admin.users.update');
     Route::delete('/admin/ViewUsers/{user}/delete', [AdminController::class, 'destroy'])->name('admin.users.destroy');
 
+    Route::get('/admin/ViewProspects', [AdminController::class, 'viewprospects'])->name('admin.prospects');
+    Route::get('/admin/ViewProspects/create', [AdminController::class, 'createPros'])->name('admin.prospect.create');
+    Route::post('/admin/ViewProspects/store', [AdminController::class, 'storePros'])->name('admin.prospect.store');
+    Route::get('/admin/ViewProspects/{prospect}/edit', [AdminController::class, 'editPros'])->name('admin.prospect.edit');
+    Route::put('/admin/ViewProspects/{prospect}', [AdminController::class, 'updatePros'])->name('admin.prospect.update');
+    Route::delete('/admin/ViewUsers/{prospect}/delete', [AdminController::class, 'destroyPros'])->name('admin.prospect.destroy');
 });
 
 Route::middleware('auth')->group(function () {

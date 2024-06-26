@@ -42,6 +42,18 @@
     </style>
 </head>
 <body>
+@if(session('success'))
+    <div id="flash-message" class="alert alert-success" role="alert" style="opacity: 1; transition: opacity 5s ease-in-out;background-color: #28a745; color: #fff; padding: 10px; margin-bottom: 20px;">
+        {{ session('success') }}
+    </div>
+    <script>
+        // Automatically close the flash message after 5 seconds
+        setTimeout(function() {
+            document.getElementById('flash-message').style.display = 'none';
+        }, 5000); // 5000 milliseconds = 5 seconds
+    </script>
+@endif
+
     <div class="container">
         <h1 class="mb-4">Users</h1>
         <a href="{{ route('admin.users.create') }}"  style="margin-bottom: 20px;margin-left: 87%; display: inline-block; font-weight: 400; color: #fff; text-align: center;
@@ -67,6 +79,7 @@
                 </tr>
             </thead>
             <tbody>
+
                 @foreach($users as $user)
                     <tr>
                         <td>{{ $user->id }}</td>

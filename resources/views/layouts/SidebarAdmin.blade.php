@@ -388,7 +388,7 @@
       <i class='bx bx-menu' ></i>
       <span class="text">Drop Down Sidebar</span>
     </div>
-    <main id="main" class="flexbox-col">
+    <main id="main" class="flexbox-col unique">
 @yield('content')
 </main>
 

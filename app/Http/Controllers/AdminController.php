@@ -42,11 +42,12 @@ class AdminController extends Controller
             'password' => bcrypt($validatedData['password']),
         ]);
 
+
         return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        return view('admin.EditUser', compact('user'));
     }
 
     public function update(Request $request, User $user)
@@ -56,6 +57,7 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'role' => 'required|in:0,1,2',
+            'password' => 'nullable|string|min:8',
         ]);
 
         // Update user
@@ -63,6 +65,8 @@ class AdminController extends Controller
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'role' => $validatedData['role'],
+            'password' => $validatedData['password'] ? bcrypt($validatedData['password']) : $user->password,
+
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');

@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/ViewProspects/store', [AdminController::class, 'storePros'])->name('admin.prospect.store');
     Route::get('/admin/ViewProspects/{prospect}/edit', [AdminController::class, 'editPros'])->name('admin.prospect.edit');
     Route::put('/admin/ViewProspects/{prospect}', [AdminController::class, 'updatePros'])->name('admin.prospect.update');
-    Route::delete('/admin/ViewUsers/{prospect}/delete', [AdminController::class, 'destroyPros'])->name('admin.prospect.destroy');
+    Route::delete('/admin/ViewProspects/{prospect}/delete', [AdminController::class, 'destroyPros'])->name('admin.prospect.destroy');
 });
 
 Route::middleware('auth')->group(function () {

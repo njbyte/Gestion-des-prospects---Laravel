@@ -138,4 +138,10 @@ class AdminController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
     }
 
+    public function destroyPros(Pros $prospect)
+    {
+        $prospect->delete();
+        return redirect()->route('admin.prospects')->with('success', 'Prospect deleted successfully.');
+    }
+
 }

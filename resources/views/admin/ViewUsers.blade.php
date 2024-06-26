@@ -50,7 +50,7 @@
         // Automatically close the flash message after 5 seconds
         setTimeout(function() {
             document.getElementById('flash-message').style.display = 'none';
-        }, 5000); // 5000 milliseconds = 5 seconds
+        }, 5000);
     </script>
 @endif
 

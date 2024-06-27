@@ -86,7 +86,7 @@
                         <td>{{ $prospect->name }}</td>
                         <td>{{ $prospect->email }}</td>
                         <td>
-                        @if ($prospect->status == 0)
+                        @if ($prospect->status == 0) <!-- 0: Nouveau / 1:Qualifié 2: Rejeté 3: converti 4: cloturé-->
                             Nouveau
                         @elseif ($prospect->status == 1)
                             Qualifié

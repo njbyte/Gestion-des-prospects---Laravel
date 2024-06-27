@@ -5,15 +5,13 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 
-Auth::routes();
-Route::middleware('auth')->group(function () {
+
+
 Route::get('/', function () {
     return view('auth.login');
-});});
+});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',[AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
@@ -37,6 +35,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/ViewProspects/{prospect}/edit', [AdminController::class, 'editPros'])->name('admin.prospect.edit');
     Route::put('/admin/ViewProspects/{prospect}', [AdminController::class, 'updatePros'])->name('admin.prospect.update');
     Route::delete('/admin/ViewProspects/{prospect}/delete', [AdminController::class, 'destroyPros'])->name('admin.prospect.destroy');
+});
+Route::middleware('auth')->group(function () {
+    Route::get('/Qualificateur/ViewProspects', [QualificateurController::class, 'viewprospects'])->name('qualif.prospects');
+    Route::get('/Qualificateur/ViewProspects/create', [QualificateurController::class, 'createPros'])->name('qualif.prospect.create');
+    Route::post('/Qualificateur/ViewProspects/store', [QualificateurController::class, 'storePros'])->name('qualif.prospect.store');
+    Route::get('/Qualificateur/ViewProspects/{prospect}/edit', [QualificateurController::class, 'editPros'])->name('qualif.prospect.edit');
+    Route::put('/Qualificateur/ViewProspects/{prospect}', [QualificateurController::class, 'updatePros'])->name('qualif.prospect.update');
+    Route::delete('/Qualificateur/ViewProspects/{prospect}/delete', [QualificateurController::class, 'destroyPros'])->name('qualif.prospect.destroy');
 });
 
 Route::middleware('auth')->group(function () {

@@ -14,3 +14,5 @@ login page : add made by Saif supervised by Mr . Hamdan hicham
 la possibilité de faire des exports (excel, csv, texte, pdf)
 
 log file save any change
+
+side bar change status of each user admin - comm - quali

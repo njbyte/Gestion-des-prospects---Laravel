@@ -35,10 +35,8 @@ class AuthenticatedSessionController extends Controller
         } elseif ($user->role == 1) {
             return redirect()->route('qualif.prospects');
         }
-        else(
-            return redirect()->route('comm.index');
-        )
 
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
 

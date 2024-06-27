@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Pros;
+use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     public function index()
@@ -15,6 +16,18 @@ class AdminController extends Controller
         // Pass users to the view
         return view('admin.ViewUsers', compact('users'));
     }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('success', 'You have been logged out.');
+    }
+
+
     public function viewprospects()
     {
         // Fetch all users

@@ -5,21 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Pros;
-
-class QualificateurController extends Controller
+class CommercialController extends Controller
 {
     public function viewprospects()
     {
         // Fetch all users
-        $prospects = Pros::whereIn('status', [0, 1])->get(); //<!-- 0: Nouveau / 1:Qualifié 2: Rejeté 3: converti 4: cloturé-->
+        $prospects = Pros::where('status', 1)->get(); //<!-- 0: Nouveau / 1:Qualifié 2: Rejeté 3: converti 4: cloturé-->
 
         // Pass users to the view
-        return view('qualificateur.ViewProspects', compact('prospects'));
+        return view('commercial.ViewProspects', compact('prospects'));
     }
 
     public function editPros(Pros $prospect)
     {
-        return view('qualificateur.EditPros', compact('prospect'));
+        return view('commercial.EditPros', compact('prospect'));
     }
 
     public function updatePros(Request $request, Pros $prospect)
@@ -38,6 +37,6 @@ class QualificateurController extends Controller
 
         ]);
 
-        return redirect()->route('qualif.prospects')->with('success', 'Prospect updated successfully.');
+        return redirect()->route('comm.prospects')->with('success', 'Prospect updated successfully.');
     }
 }

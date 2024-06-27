@@ -5,7 +5,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\QualificateurController;
-
+use App\Http\Controllers\CommercialController;
 
 
     Route::get('/', function () {
@@ -42,17 +42,13 @@ Route::middleware('auth','verified')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/Qualificateur/ViewProspects', [QualificateurController::class, 'viewprospects'])->name('qualif.prospects');
-    Route::get('/Qualificateur/ViewProspects/create', [QualificateurController::class, 'createPros'])->name('qualif.prospect.create');
-    Route::post('/Qualificateur/ViewProspects/store', [QualificateurController::class, 'storePros'])->name('qualif.prospect.store');
     Route::get('/Qualificateur/ViewProspects/{prospect}/edit', [QualificateurController::class, 'editPros'])->name('qualif.prospect.edit');
     Route::put('/Qualificateur/ViewProspects/{prospect}', [QualificateurController::class, 'updatePros'])->name('qualif.prospect.update');
 });
 Route::middleware('auth')->group(function () {
-    Route::get('/Qualificateur/ViewProspects', [QualificateurController::class, 'viewprospects'])->name('comm.prospects');
-    Route::get('/Qualificateur/ViewProspects/create', [QualificateurController::class, 'createPros'])->name('comm.prospect.create');
-    Route::post('/Qualificateur/ViewProspects/store', [QualificateurController::class, 'storePros'])->name('comm.prospect.store');
-    Route::get('/Qualificateur/ViewProspects/{prospect}/edit', [QualificateurController::class, 'editPros'])->name('comm.prospect.edit');
-    Route::put('/Qualificateur/ViewProspects/{prospect}', [QualificateurController::class, 'updatePros'])->name('comm.prospect.update');
+    Route::get('/Commercial/ViewProspects', [CommercialController::class, 'viewprospects'])->name('comm.prospects');
+    Route::get('/Commercial/ViewProspects/{prospect}/edit', [CommercialController::class, 'editPros'])->name('comm.prospect.edit');
+    Route::put('/Commercial/ViewProspects/{prospect}', [CommercialController::class, 'updatePros'])->name('comm.prospect.update');
 });
 
 Route::middleware('auth')->group(function () {

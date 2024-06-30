@@ -67,13 +67,13 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Status</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                    <th>Actions</th> <!-- New column for actions -->
+                    <th onclick="sortTable(0)">>ID</th>
+                    <th onclick="sortTable(1)">>Name</th>
+                    <th onclick="sortTable(2)">>Email</th>
+                    <th onclick="sortTable(3)">>Status</th>
+                    <th onclick="sortTable(4)" >>Created At</th>
+                    <th onclick="sortTable(5)">>Updated At</th>
+                    <th>>Actions</th> <!-- New column for actions -->
                 </tr>
             </thead>
             <tbody>
@@ -111,6 +111,57 @@
             </tbody>
         </table>
     </div>
+
+    <script>
+    let sortOrders = {}; // Initialize sorting order map
+
+    function sortTable(columnIndex) {
+        let table, rows, switching, i, x, y, shouldSwitch;
+        table = document.querySelector("table");
+        switching = true;
+        let sortOrder = sortOrders[columnIndex] || 'asc'; // Default to ascending
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("td")[columnIndex];
+                y = rows[i + 1].getElementsByTagName("td")[columnIndex];
+
+                // Handle numeric or date comparison
+                if (columnIndex === 0 ) { // Assuming column 0 is ID, 4 and 5 are dates (created_at and updated_at)
+                    let valX = parseInt(x.innerHTML.trim());
+                    let valY = parseInt(y.innerHTML.trim());
+                    if ((sortOrder === 'asc' && valX > valY) || (sortOrder === 'desc' && valX < valY)) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                else if (columnIndex === 4 || columnIndex === 5) { // Assuming column 4 and 5 are dates (created_at and updated_at)
+                    let dateX = new Date(x.innerHTML.trim());
+                    let dateY = new Date(y.innerHTML.trim());
+                    if ((sortOrder === 'asc' && dateX > dateY) || (sortOrder === 'desc' && dateX < dateY)) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                } else { // Default text comparison
+                    if ((sortOrder === 'asc' && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) || (sortOrder === 'desc' && x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase())) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Toggle sort order
+                sortOrders[columnIndex] = sortOrder === 'asc' ? 'desc' : 'asc';
+            }
+        }
+    }
+</script>
+
 </body>
 @endsection
 

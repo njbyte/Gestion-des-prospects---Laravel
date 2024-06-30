@@ -7,14 +7,23 @@ use App\Models\User;
 use App\Models\Pros;
 class CommercialController extends Controller
 {
-    public function viewprospects()
+    public function viewprospects(Request $request)
     {
         // Fetch all users
-        $prospects = Pros::where('status', 1)->get(); //<!-- 0: Nouveau / 1:Qualifié 2: Rejeté 3: converti 4: cloturé-->
+         //<!-- 0: Nouveau / 1:Qualifié 2: Rejeté 3: converti 4: cloturé-->
 
-        // Pass users to the view
-        return view('commercial.ViewProspects', compact('prospects'));
-    }
+            $search = $request->input('search');
+
+            $prospects = Pros::query()
+                ->where('status', 1)
+                ->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%")
+                          ->orWhere('email', 'like', "%{$search}%");
+                })
+                ->get();
+
+            return view('commercial.ViewProspects', compact('prospects'));
+        }
 
     public function editPros(Pros $prospect)
     {

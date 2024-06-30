@@ -376,7 +376,7 @@
       </div>
       <div class="name-job">
         <div class="profile_name">@yield('profilename')</div>
-        <div class="job">Admin</div>
+        <div class="job">@yield('role')</div>
       </div>
       <form method="POST" action="{{ route('logout') }}" id="logoutForm">
     @csrf

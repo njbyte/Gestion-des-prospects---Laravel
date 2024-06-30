@@ -106,3 +106,8 @@
 @section('profilename')
 SaifeddineNajmi
 @endsection
+
+
+@section('role')
+Admin
+@endsection

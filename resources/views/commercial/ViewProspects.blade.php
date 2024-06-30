@@ -55,7 +55,10 @@
 @endif
 
 
-
+<form method="GET" action="{{ route('comm.prospects') }}" class="mb-4">
+        <input type="text" name="search" placeholder="Search users..." value="{{ request('search') }}" style="padding: 8px; width: 300px;">
+        <button type="submit" style="padding: 8px 12px; background-color: #139C49; color: white; border: none; border-radius: 0.25rem;">Search</button>
+    </form>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -108,4 +111,8 @@
 
 @section('profilename')
 SaifeddineNajmi
+@endsection
+
+@section('role')
+Commercial
 @endsection

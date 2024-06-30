@@ -106,3 +106,6 @@
 @section('profilename')
 SaifeddineNajmi
 @endsection
+@section('role')
+Qualificateur
+@endsection

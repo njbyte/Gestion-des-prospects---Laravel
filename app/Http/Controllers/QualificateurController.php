@@ -8,13 +8,21 @@ use App\Models\Pros;
 
 class QualificateurController extends Controller
 {
-    public function viewprospects()
+    public function viewprospects(Request $request)
     {
         // Fetch all users
-        $prospects = Pros::whereIn('status', [0, 1])->get(); //<!-- 0: Nouveau / 1:Qualifié 2: Rejeté 3: converti 4: cloturé-->
+        $search = $request->input('search');
 
-        // Pass users to the view
-        return view('qualificateur.ViewProspects', compact('prospects'));
+            $prospects = Pros::query()
+                ->where('status', 1)
+                ->orwhere('status', 0)
+                ->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%")
+                          ->orWhere('email', 'like', "%{$search}%");
+                })
+                ->get();
+
+            return view('qualificateur.ViewProspects', compact('prospects'));
     }
 
     public function editPros(Pros $prospect)

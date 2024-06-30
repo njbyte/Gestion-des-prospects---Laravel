@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
 use App\Exports\ProspectsExport;
 use PDF;
+use Illuminate\Support\Facades\Log;
 
 
 class AdminController extends Controller

@@ -126,7 +126,18 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
-
+//saves all updates aabout users
+        'users_log' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/Userslogs.log'),
+            'level' => 'info',
+        ],
+//saves all updates about prospects
+        'prospects_log' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/Prospectslogs.log'),
+            'level' => 'info',
+        ],
     ],
 
 ];

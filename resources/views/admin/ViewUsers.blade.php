@@ -56,6 +56,12 @@
 
     <div class="container">
         <h1 class="mb-4">Users</h1>
+<!-- Search Bar -->
+<form method="GET" action="{{ route('admin.users.index') }}" class="mb-4">
+        <input type="text" name="search" placeholder="Search users..." value="{{ request('search') }}" style="padding: 8px; width: 300px;">
+        <button type="submit" style="padding: 8px 12px; background-color: #139C49; color: white; border: none; border-radius: 0.25rem;">Search</button>
+    </form>
+
         <a href="{{ route('admin.users.create') }}"  style="margin-bottom: 20px;margin-left: 87%; display: inline-block; font-weight: 400; color: #fff; text-align: center;
               vertical-align: middle; user-select: none; background-color: #139C49;
               border: 1px solid transparent; padding: 0.375rem 0.75rem; font-size: 1rem;

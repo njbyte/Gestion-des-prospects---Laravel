@@ -8,13 +8,23 @@ use App\Models\Pros;
 use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Fetch all users
-        $users = User::all();
 
-        // Pass users to the view
-        return view('admin.ViewUsers', compact('users'));
+            $search = $request->input('search');
+
+            $users = User::query()
+                ->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere(function ($query) use ($search) {
+                    $query->where('role', 0)->whereRaw("0 LIKE ?", ["%{$search}%"])
+                        ->orWhere('role', 1)->whereRaw("1 LIKE ?", ["%{$search}%"])
+                        ->orWhere('role', 2)->whereRaw("2 LIKE ?", ["%{$search}%"]);
+                })
+                ->get();
+
+            return view('admin.ViewUsers', compact('users'));
+
     }
     public function logout(Request $request)
     {

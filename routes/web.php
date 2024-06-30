@@ -14,16 +14,11 @@ use App\Http\Controllers\CommercialController;
 
 
 
+
     Route::get('/dashboard', [AdminController::class, 'logout'])->name('dashboard');
 
 
-Route::middleware('auth')->group(function () {
-    Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
-        Route::view('admin', 'admin.ViewUsers')->name('dashboard');
 
-
-    });
-});
 Route::middleware('auth','verified')->group(function () {
     Route::get('/admin/ViewUsers', [AdminController::class, 'index'])->name('admin.users.index');
     Route::get('/admin/ViewUsers/create', [AdminController::class, 'create'])->name('admin.users.create');

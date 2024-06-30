@@ -16,3 +16,8 @@ la possibilité de faire des exports (excel, csv, texte, pdf)
 log file save any change
 
 side bar change status of each user admin - comm - quali
+
+
+Requirement:
+composer require maatwebsite/excel
+composer require barryvdh/laravel-dompdf

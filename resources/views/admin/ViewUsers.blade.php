@@ -54,24 +54,31 @@
     </script>
 @endif
 
-    <div class="container">
+    <div class="container" >
         <h1 class="mb-4">Users</h1>
-<!-- Search Bar -->
-<form method="GET" action="{{ route('admin.users.index') }}" class="mb-4">
-        <input type="text" name="search" placeholder="Search users..." value="{{ request('search') }}" style="padding: 8px; width: 300px;">
-        <button type="submit" style="padding: 8px 12px; background-color: #139C49; color: white; border: none; border-radius: 0.25rem;">Search</button>
-    </form>
 
-        <a href="{{ route('admin.users.create') }}"  style="margin-bottom: 20px;margin-left: 87%; display: inline-block; font-weight: 400; color: #fff; text-align: center;
-              vertical-align: middle; user-select: none; background-color: #139C49;
-              border: 1px solid transparent; padding: 0.375rem 0.75rem; font-size: 1rem;
-              line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out,
-              background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-              box-shadow 0.15s ease-in-out; text-decoration: none; position: relative;
-              overflow: hidden;">
-    Create New User
-</a>
+        <div class="container">
+    <div style="margin-bottom: 20px;">
+        <!-- Search Bar -->
+        <form method="GET" action="{{ route('admin.users.index') }}" style="display: inline-block;">
+            <input type="text" name="search" placeholder="Search users..." value="{{ request('search') }}" style="padding: 8px; width: 300px;">
+            <button type="submit" style="padding: 8px 12px; background-color: #139C49; color: white; border: none; border-radius: 0.25rem;">Search</button>
+        </form>
 
+        <!-- Create New User Button -->
+        <a href="{{ route('admin.users.create') }}" style="display: inline-block; margin-left: 10px; font-weight: 400; color: #fff; text-align: center; vertical-align: middle; user-select: none; background-color: #139C49; border: 1px solid transparent; padding: 0.375rem 0.75rem; font-size: 1rem; line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; text-decoration: none; position: relative; overflow: hidden;">
+            Create New User
+        </a>
+    </div>
+
+    <!-- Export Buttons -->
+    <div>
+    <a href="{{ route('admin.users.export', ['format' => 'txt']) }}" class="btn btn-secondary">Export as Text</a>
+                <a href="{{ route('admin.users.export', ['format' => 'pdf']) }}" class="btn btn-danger">Export as PDF</a>
+
+        <a href="{{ route('admin.users.export', ['format' => 'xlsx']) }}" class="btn btn-success" style="margin-right: 10px;">Export as XLSX</a>
+        <a href="{{ route('admin.users.export', ['format' => 'csv']) }}" class="btn btn-info">Export as CSV</a>
+    </div>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -112,6 +119,8 @@
                                 <button style="border:none;" type="submit"  onclick="return confirm('Are you sure you want to delete this user?')"><svg style="height:30px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#bd0000" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg></button>
                             </form>
                             @endif
+
+
                         </td>
                     </tr>
                 @endforeach

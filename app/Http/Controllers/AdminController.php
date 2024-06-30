@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Pros;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
+use App\Exports\ProspectsExport;
+use PDF;
+
+
 class AdminController extends Controller
 {
     public function index(Request $request)
@@ -167,4 +173,134 @@ class AdminController extends Controller
         return redirect()->route('admin.prospects')->with('success', 'Prospect deleted successfully.');
     }
 
+
+    public function export($format)
+    {
+        if ($format === 'xlsx') {
+            return Excel::download(new UsersExport, 'users.xlsx');
+        } elseif ($format === 'csv') {
+            return Excel::download(new UsersExport, 'users.csv');
+        }elseif ($format === 'txt') {
+            $users = User::all();
+            $users->transform(function ($user) {
+                switch ($user->role) {
+                    case 0:
+                        $user->role_label = 'Admin';
+                        break;
+                    case 1:
+                        $user->role_label = 'Qualificateur';
+                        break;
+                    case 2:
+                        $user->role_label = 'Commercial';
+                        break;
+                    }
+                    return $user;
+                });// Fetch users data
+            $txtContent = '';
+            foreach ($users as $user) {
+                $txtContent .= "Name: {$user->name}, Email: {$user->email}, Role: {$user->role_label}\n";
+            }
+            $filename = 'users.txt';
+            return response($txtContent)
+                    ->header('Content-Type', 'text/plain')
+                    ->header('Content-Disposition', 'attachment; filename="'.$filename.'"');
+
+        }elseif ($format === 'pdf') {
+            $users = User::all(); // Fetch users data
+            $users->transform(function ($user) {
+                switch ($user->role) {
+                    case 0:
+                        $user->role_label = 'Admin';
+                        break;
+                    case 1:
+                        $user->role_label = 'Qualificateur';
+                        break;
+                    case 2:
+                        $user->role_label = 'Commercial';
+                        break;
+                    }
+                    return $user;
+                });
+                $pdf = PDF::loadView('admin.pdf', compact('users'));
+                return $pdf->download('users.pdf');
+        }
+
+        abort(404); // Handle invalid format or other cases
+    }
+
+    public function showPdf()
+{
+    return view('admin.pdf');
+}
+
+public function exportPros($format)
+    {
+        if ($format === 'xlsx') {
+            return Excel::download(new ProspectsExport, 'Prospects.xlsx');
+        } elseif ($format === 'csv') {
+            return Excel::download(new ProspectsExport, 'Prospects.csv');
+        }elseif ($format === 'txt') {
+            $users = Pros::all();
+            $users->transform(function ($user) {
+                switch ($user->status) { // -- 0: Nouveau / 1:Qualifié 2: Rejeté 3: converti 4: cloturé-->
+                    case 0:
+                        $user->status_label = 'Nouveau';
+                        break;
+                    case 1:
+                        $user->status_label = 'Qualifié';
+                        break;
+                    case 2:
+                        $user->status_label = 'Rejeté';
+                        break;
+                    case 3:
+                        $user->status_label = 'Converti';
+                        break;
+                    case 4  :
+                        $user->status_label = 'Cloturé';
+                        break;
+                    }
+                    return $user;
+                });
+            $txtContent = '';
+            foreach ($users as $user) {
+                $txtContent .= "Name: {$user->name}, Email: {$user->email}, Status: {$user->status_label}\n";
+            }
+            $filename = 'Prospects.txt';
+            return response($txtContent)
+                    ->header('Content-Type', 'text/plain')
+                    ->header('Content-Disposition', 'attachment; filename="'.$filename.'"');
+
+        }elseif ($format === 'pdf') {
+            $users = Pros::all(); // Fetch users data
+            $users->transform(function ($user) {
+                switch ($user->status) { // -- 0: Nouveau / 1:Qualifié 2: Rejeté 3: converti 4: cloturé-->
+                    case 0:
+                        $user->status_label = 'Nouveau';
+                        break;
+                    case 1:
+                        $user->status_label = 'Qualifié';
+                        break;
+                    case 2:
+                        $user->status_label = 'Rejeté';
+                        break;
+                    case 3:
+                        $user->status_label = 'Converti';
+                        break;
+                    case 4  :
+                        $user->status_label = 'Cloturé';
+                        break;
+                    }
+                    return $user;
+                });
+                $pdf = PDF::loadView('admin.pdfPros', compact('users'));
+                return $pdf->download('Prospects.pdf');
+        }
+
+        abort(404); // Handle invalid format or other cases
+    }
+
+    public function showPdfPros()
+{
+    return view('admin.pdfPros');
+}
 }

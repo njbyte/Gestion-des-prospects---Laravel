@@ -59,6 +59,12 @@
         <input type="text" name="search" placeholder="Search users..." value="{{ request('search') }}" style="padding: 8px; width: 300px;">
         <button type="submit" style="padding: 8px 12px; background-color: #139C49; color: white; border: none; border-radius: 0.25rem;">Search</button>
     </form>
+    <a href="{{ route('comm.prospect.export', ['format' => 'txt']) }}" class="btn btn-secondary">Export as Text</a>
+    <a href="{{ route('comm.prospect.export', ['format' => 'pdf']) }}" class="btn btn-danger">Export as PDF</a>
+
+    <a href="{{ route('comm.prospect.export', ['format' => 'xlsx']) }}" class="btn btn-success" style="margin-right: 10px;">Export as XLSX</a>
+    <a href="{{ route('comm.prospect.export', ['format' => 'csv']) }}" class="btn btn-info">Export as CSV</a>
+
         <table class="table table-bordered">
             <thead>
                 <tr>

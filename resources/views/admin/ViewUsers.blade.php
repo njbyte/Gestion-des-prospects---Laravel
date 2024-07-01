@@ -98,7 +98,7 @@
                         <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>
+                        <td class ="">
                             @if ($user->role == 0)
                                 Admin
                             @elseif ($user->role == 1)

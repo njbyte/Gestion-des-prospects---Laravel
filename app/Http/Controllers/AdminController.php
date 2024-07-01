@@ -30,7 +30,7 @@ class AdminController extends Controller
                 })
                 ->get();
 
-            return view('admin.ViewUsers', compact('users'));
+            return view('admin.ViewUsers2', compact('users'));
 
     }
     public function logout(Request $request)

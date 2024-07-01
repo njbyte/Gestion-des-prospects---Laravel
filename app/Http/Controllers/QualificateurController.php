@@ -19,14 +19,17 @@ class QualificateurController extends Controller
         // Fetch all users
         $search = $request->input('search');
 
-            $prospects = Pros::query()
-                ->where('status', 1)
-                ->orwhere('status', 0)
-                ->where(function ($query) use ($search) {
-                    $query->where('name', 'like', "%{$search}%")
-                          ->orWhere('email', 'like', "%{$search}%");
-                })
-                ->get();
+        $prospects = Pros::query()
+        ->where(function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+        })
+        ->where(function ($query) {
+            $query->where('status', 1)
+                  ->orWhere('status', 0);
+        })
+        ->get();
+
 
 
 

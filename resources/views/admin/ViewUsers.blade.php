@@ -82,12 +82,12 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
+                    <th onclick="sortTable(0)">ID</th>
+                    <th onclick="sortTable(1)">Name</th>
+                    <th onclick="sortTable(2)">Email</th>
+                    <th onclick="sortTable(3)">Role</th>
+                    <th onclick="sortTable(4)">Created At</th>
+                    <th onclick="sortTable(5)">Updated At</th>
                     <th>Actions</th> <!-- New column for actions -->
                 </tr>
             </thead>
@@ -127,6 +127,38 @@
             </tbody>
         </table>
     </div>
+
+
+    <script>
+    let sortDirection = 1; // 1 for ascending, -1 for descending
+
+    function sortTable(columnIndex) {
+        const table = document.querySelector('table');
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+
+        rows.sort((a, b) => {
+            const aValue = a.cells[columnIndex].textContent.trim();
+            const bValue = b.cells[columnIndex].textContent.trim();
+
+            // You can customize the sorting logic based on your data type (e.g., numeric, string, date)
+            const comparison = aValue.localeCompare(bValue) * sortDirection;
+
+            // For numeric sorting:
+            // const comparison = (parseFloat(aValue) - parseFloat(bValue)) * sortDirection;
+
+            return comparison;
+        });
+
+        // Clear the existing table rows
+        table.querySelector('tbody').innerHTML = '';
+
+        // Append the sorted rows back to the table
+        rows.forEach(row => table.querySelector('tbody').appendChild(row));
+
+        // Toggle the sort direction for the next click
+        sortDirection *= -1;
+    }
+</script>
 </body>
 @endsection
 

@@ -28,6 +28,8 @@ class QualificateurController extends Controller
                 })
                 ->get();
 
+
+
             return view('qualificateur.ViewProspects', compact('prospects'));
     }
 

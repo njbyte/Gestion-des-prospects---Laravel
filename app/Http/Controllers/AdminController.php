@@ -48,7 +48,7 @@ class AdminController extends Controller
     public function viewprospects()
     {
         // Fetch all users
-        $prospects = Pros::all();
+        $prospects = Pros::paginate(10);;
 
         // Pass users to the view
         return view('admin.ViewProspects', compact('prospects'));

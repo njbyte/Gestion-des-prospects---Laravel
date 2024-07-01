@@ -63,11 +63,18 @@
     <a href="{{ route('qualif.prospect.export', ['format' => 'xlsx']) }}" class="btn btn-success" style="margin-right: 10px;">Export as XLSX</a>
     <a href="{{ route('qualif.prospect.export', ['format' => 'csv']) }}" class="btn btn-info">Export as CSV</a>
 
+    <thead>
+    <tr>
+        <th><a href="{{ route('qualif.prospects', ['sort_by' => 'id']) }}">ID</a></th>
+        <th><a href="{{ route('qualif.prospects', ['sort_by' => 'name']) }}">Name</a></th>
+        <!-- Other table headers -->
+    </tr>
+</thead>
 
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th onclick="sortTable(0)">>ID</th>
+                <th onclick="sortTable(0)">>ID</th>
                     <th onclick="sortTable(1)">>Name</th>
                     <th onclick="sortTable(2)">>Email</th>
                     <th onclick="sortTable(3)">>Status</th>
@@ -113,55 +120,35 @@
     </div>
 
     <script>
-    let sortOrders = {}; // Initialize sorting order map
+    let sortDirection = 1; // 1 for ascending, -1 for descending
 
     function sortTable(columnIndex) {
-        let table, rows, switching, i, x, y, shouldSwitch;
-        table = document.querySelector("table");
-        switching = true;
-        let sortOrder = sortOrders[columnIndex] || 'asc'; // Default to ascending
+        const table = document.querySelector('table');
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
 
-        while (switching) {
-            switching = false;
-            rows = table.rows;
-            for (i = 1; i < (rows.length - 1); i++) {
-                shouldSwitch = false;
-                x = rows[i].getElementsByTagName("td")[columnIndex];
-                y = rows[i + 1].getElementsByTagName("td")[columnIndex];
+        rows.sort((a, b) => {
+            const aValue = a.cells[columnIndex].textContent.trim();
+            const bValue = b.cells[columnIndex].textContent.trim();
 
-                // Handle numeric or date comparison
-                if (columnIndex === 0 ) { // Assuming column 0 is ID, 4 and 5 are dates (created_at and updated_at)
-                    let valX = parseInt(x.innerHTML.trim());
-                    let valY = parseInt(y.innerHTML.trim());
-                    if ((sortOrder === 'asc' && valX > valY) || (sortOrder === 'desc' && valX < valY)) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                else if (columnIndex === 4 || columnIndex === 5) { // Assuming column 4 and 5 are dates (created_at and updated_at)
-                    let dateX = new Date(x.innerHTML.trim());
-                    let dateY = new Date(y.innerHTML.trim());
-                    if ((sortOrder === 'asc' && dateX > dateY) || (sortOrder === 'desc' && dateX < dateY)) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-                } else { // Default text comparison
-                    if ((sortOrder === 'asc' && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) || (sortOrder === 'desc' && x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase())) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-            }
-            if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-                // Toggle sort order
-                sortOrders[columnIndex] = sortOrder === 'asc' ? 'desc' : 'asc';
-            }
-        }
+            // You can customize the sorting logic based on your data type (e.g., numeric, string, date)
+            const comparison = aValue.localeCompare(bValue) * sortDirection;
+
+            // For numeric sorting:
+            // const comparison = (parseFloat(aValue) - parseFloat(bValue)) * sortDirection;
+
+            return comparison;
+        });
+
+        // Clear the existing table rows
+        table.querySelector('tbody').innerHTML = '';
+
+        // Append the sorted rows back to the table
+        rows.forEach(row => table.querySelector('tbody').appendChild(row));
+
+        // Toggle the sort direction for the next click
+        sortDirection *= -1;
     }
 </script>
-
 </body>
 @endsection
 

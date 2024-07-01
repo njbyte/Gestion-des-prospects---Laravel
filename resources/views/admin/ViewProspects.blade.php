@@ -39,6 +39,7 @@
             padding: 8px 12px;
             margin-right: 5px;
         }
+
     </style>
 </head>
 <body>
@@ -55,67 +56,58 @@
 @endif
 
     <div class="container">
-        <h1 class="mb-4">Prospect</h1>
-        <a href="{{ route('admin.prospect.create') }}"  style="margin-bottom: 20px;margin-left: 87%; display: inline-block; font-weight: 400; color: #fff; text-align: center;
-              vertical-align: middle; user-select: none; background-color: #139C49;
-              border: 1px solid transparent; padding: 0.375rem 0.75rem; font-size: 1rem;
-              line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out,
-              background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-              box-shadow 0.15s ease-in-out; text-decoration: none; position: relative;
-              overflow: hidden;">
-    Create New Prospect
-</a>
-<div>
-<form method="GET" action="{{ route('admin.prospects') }}" class="mb-4">
-        <input type="text" name="search" placeholder="Search users..." value="{{ request('search') }}" style="padding: 8px; width: 300px;">
-        <button type="submit" style="padding: 8px 12px; background-color: #139C49; color: white; border: none; border-radius: 0.25rem;">Search</button>
-    </form>
-    <a href="{{ route('admin.pros.export', ['format' => 'txt']) }}" class="btn btn-secondary">Export as Text</a>
-                <a href="{{ route('admin.pros.export', ['format' => 'pdf']) }}" class="btn btn-danger">Export as PDF</a>
+        <h1 class="mb-4">Prospects</h1>
+        <a href="{{ route('admin.prospect.create') }}" style="margin-bottom: 20px; margin-left: 87%; display: inline-block; font-weight: 400; color: #fff; text-align: center; vertical-align: middle; user-select: none; background-color: #139C49; border: 1px solid transparent; padding: 0.375rem 0.75rem; font-size: 1rem; line-height: 1.5; border-radius: 0.25rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; text-decoration: none; position: relative; overflow: hidden;">
+            Create New Prospect
+        </a>
 
-        <a href="{{ route('admin.pros.export', ['format' => 'xlsx']) }}" class="btn btn-success" style="margin-right: 10px;">Export as XLSX</a>
-        <a href="{{ route('admin.pros.export', ['format' => 'csv']) }}" class="btn btn-info">Export as CSV</a>
-    </div>
+        <form method="GET" action="{{ route('admin.prospects') }}" class="mb-4">
+            <input type="text" name="search" placeholder="Search users..." value="{{ request('search') }}" style="padding: 8px; width: 300px;">
+            <button type="submit" style="padding: 8px 12px; background-color: #139C49; color: white; border: none; border-radius: 0.25rem;">Search</button>
+        </form>
+
+        <div>
+            <a href="{{ route('admin.pros.export', ['format' => 'txt']) }}" class="btn btn-secondary">Export as Text</a>
+            <a href="{{ route('admin.pros.export', ['format' => 'pdf']) }}" class="btn btn-danger">Export as PDF</a>
+            <a href="{{ route('admin.pros.export', ['format' => 'xlsx']) }}" class="btn btn-success" style="margin-right: 10px;">Export as XLSX</a>
+            <a href="{{ route('admin.pros.export', ['format' => 'csv']) }}" class="btn btn-info">Export as CSV</a>
+        </div>
+
         <table class="table table-bordered">
             <thead>
                 <tr>
-                <th onclick="sortTable(0)">>ID</th>
-                    <th onclick="sortTable(1)">>Name</th>
-                    <th onclick="sortTable(2)">>Email</th>
-                    <th onclick="sortTable(3)">>Status</th>
-                    <th onclick="sortTable(4)" >>Created At</th>
-                    <th onclick="sortTable(5)">>Updated At</th>
-                    <th>>Actions</th> <!-- New column for actions --><!-- New column for actions -->
+                    <th onclick="sortTable(0)">ID</th>
+                    <th onclick="sortTable(1)">Name</th>
+                    <th onclick="sortTable(2)">Email</th>
+                    <th onclick="sortTable(3)">Status</th>
+                    <th onclick="sortTable(4)">Created At</th>
+                    <th onclick="sortTable(5)">Updated At</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-
                 @foreach($prospects as $prospect)
                     <tr>
                         <td>{{ $prospect->id }}</td>
                         <td>{{ $prospect->name }}</td>
                         <td>{{ $prospect->email }}</td>
                         <td>
-                        @if ($prospect->status == 0) <!-- 0: Nouveau / 1:Qualifié 2: Rejeté 3: converti 4: cloturé-->
-                            Nouveau
-                        @elseif ($prospect->status == 1)
-                            Qualifié
-                        @elseif ($prospect->status == 2)
-                            Rejeté
-                        @elseif ($prospect->status == 3)
-                            Converti
-                        @else
-                            Cloturé
-                        @endif
-
+                            @if ($prospect->status == 0)
+                                Nouveau
+                            @elseif ($prospect->status == 1)
+                                Qualifié
+                            @elseif ($prospect->status == 2)
+                                Rejeté
+                            @elseif ($prospect->status == 3)
+                                Converti
+                            @else
+                                Cloturé
+                            @endif
                         </td>
                         <td>{{ $prospect->created_at }}</td>
                         <td>{{ $prospect->updated_at }}</td>
                         <td class="actions">
-                            <!-- Example of edit and delete links/buttons -->
-
-
-                            <a href="{{ route('admin.prospect.edit', ['prospect' => $prospect->id]) }}" ><svg style="height:30px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/></svg></a>
+                            <a href="{{ route('admin.prospect.edit', ['prospect' => $prospect->id]) }}"><svg style="height:30px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/></svg></a>
                             <form action="{{ route('admin.prospect.destroy', ['prospect' => $prospect->id]) }}" method="POST" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
@@ -126,56 +118,43 @@
                 @endforeach
             </tbody>
         </table>
+
+        <!-- Add pagination links -->
+        <div class="">
+            {{ $prospects->links() }}
+        </div>
     </div>
+
     <script>
-    let sortOrders = {}; // Initialize sorting order map
+        let sortDirection = 1; // 1 for ascending, -1 for descending
 
-    function sortTable(columnIndex) {
-        let table, rows, switching, i, x, y, shouldSwitch;
-        table = document.querySelector("table");
-        switching = true;
-        let sortOrder = sortOrders[columnIndex] || 'asc'; // Default to ascending
+        function sortTable(columnIndex) {
+            const table = document.querySelector('table');
+            const rows = Array.from(table.querySelectorAll('tbody tr'));
 
-        while (switching) {
-            switching = false;
-            rows = table.rows;
-            for (i = 1; i < (rows.length - 1); i++) {
-                shouldSwitch = false;
-                x = rows[i].getElementsByTagName("td")[columnIndex];
-                y = rows[i + 1].getElementsByTagName("td")[columnIndex];
+            rows.sort((a, b) => {
+                const aValue = a.cells[columnIndex].textContent.trim();
+                const bValue = b.cells[columnIndex].textContent.trim();
 
-                // Handle numeric or date comparison
-                if (columnIndex === 0 ) { // Assuming column 0 is ID, 4 and 5 are dates (created_at and updated_at)
-                    let valX = parseInt(x.innerHTML.trim());
-                    let valY = parseInt(y.innerHTML.trim());
-                    if ((sortOrder === 'asc' && valX > valY) || (sortOrder === 'desc' && valX < valY)) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                else if (columnIndex === 4 || columnIndex === 5) { // Assuming column 4 and 5 are dates (created_at and updated_at)
-                    let dateX = new Date(x.innerHTML.trim());
-                    let dateY = new Date(y.innerHTML.trim());
-                    if ((sortOrder === 'asc' && dateX > dateY) || (sortOrder === 'desc' && dateX < dateY)) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-                } else { // Default text comparison
-                    if ((sortOrder === 'asc' && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) || (sortOrder === 'desc' && x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase())) {
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-            }
-            if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-                // Toggle sort order
-                sortOrders[columnIndex] = sortOrder === 'asc' ? 'desc' : 'asc';
-            }
+                // Customize the sorting logic based on your data type (e.g., numeric, string, date)
+                const comparison = aValue.localeCompare(bValue) * sortDirection;
+
+                // For numeric sorting:
+                // const comparison = (parseFloat(aValue) - parseFloat(bValue)) * sortDirection;
+
+                return comparison;
+            });
+
+            // Clear the existing table rows
+            table.querySelector('tbody').innerHTML = '';
+
+            // Append the sorted rows back to the table
+            rows.forEach(row => table.querySelector('tbody').appendChild(row));
+
+            // Toggle the sort direction for the next click
+            sortDirection *= -1;
         }
-    }
-</script>
+    </script>
 </body>
 @endsection
 

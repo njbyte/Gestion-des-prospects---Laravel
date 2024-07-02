@@ -1,4 +1,4 @@
-@extends('layouts.SidebarAdmin')
+@extends('layouts.navbar')
 
 @section('content')
 <head>

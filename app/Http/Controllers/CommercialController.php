@@ -26,7 +26,7 @@ class CommercialController extends Controller
                 })
                 ->get();
 
-            return view('commercial.ViewProspects', compact('prospects'));
+            return view('commercial.ViewProspectsV2', compact('prospects'));
         }
 
     public function editPros(Pros $prospect)

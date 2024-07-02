@@ -33,7 +33,7 @@ class QualificateurController extends Controller
 
 
 
-            return view('qualificateur.ViewProspects', compact('prospects'));
+            return view('qualificateur.ViewProspectsV2', compact('prospects'));
     }
 
     public function editPros(Pros $prospect)

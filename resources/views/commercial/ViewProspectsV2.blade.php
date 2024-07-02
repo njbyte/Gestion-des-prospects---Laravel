@@ -6,324 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Convert | Export html Table to CSV & EXCEL File</title>
-
-<style>
-    * {
-    margin: 0;
-    padding: 0;
-
-    box-sizing: border-box;
-    font-family: sans-serif;
-}
-@media print {
- .table, .table__body {
-  overflow: visible;
-  height: auto !important;
-  width: auto !important;
- }
-}
-
-/*@page {
-    size: landscape;
-    margin: 0;
-}*/
-
-body {
-    min-height: 100vh;
-    background: url(images/html_table.jpg) center / cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-main.table {
-    width: 82vw;
-    height: 90vh;
-    background-color: #fff5;
-
-    backdrop-filter: blur(7px);
-    box-shadow: 0 .4rem .8rem #0005;
-    border-radius: .8rem;
-
-    overflow: hidden;
-}
-
-.table__header {
-    width: 100%;
-    height: 10%;
-    background-color: #fff4;
-    padding: .8rem 1rem;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.table__header .input-group {
-    width: 35%;
-    height: 100%;
-    background-color: #fff5;
-    padding: 0 .8rem;
-    border-radius: 2rem;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    transition: .2s;
-}
-
-.table__header .input-group:hover {
-    width: 45%;
-    background-color: #fff8;
-    box-shadow: 0 .1rem .4rem #0002;
-}
-
-.table__header .input-group img {
-    width: 1.2rem;
-    height: 1.2rem;
-}
-
-.table__header .input-group input {
-    width: 100%;
-    padding: 0 .5rem 0 .3rem;
-    background-color: transparent;
-    border: none;
-    outline: none;
-}
-
-.table__body {
-    width: 95%;
-    max-height: calc(89% - 1.6rem);
-    background-color: #fffb;
-
-    margin: .8rem auto;
-    border-radius: .6rem;
-
-    overflow: auto;
-    overflow: overlay;
-}
-
-
-.table__body::-webkit-scrollbar{
-    width: 0.5rem;
-    height: 0.5rem;
-}
-
-.table__body::-webkit-scrollbar-thumb{
-    border-radius: .5rem;
-    background-color: #0004;
-    visibility: hidden;
-}
-
-.table__body:hover::-webkit-scrollbar-thumb{
-    visibility: visible;
-}
-
-
-table {
-    width: 100%;
-}
-
-td img {
-    width: 36px;
-    height: 36px;
-    margin-right: .5rem;
-    border-radius: 50%;
-
-    vertical-align: middle;
-}
-
-table, th, td {
-    border-collapse: collapse;
-    padding: 1rem;
-    text-align: left;
-}
-
-thead th {
-    position: sticky;
-    top: 0;
-    left: 0;
-    background-color: #d5d1defe;
-    cursor: pointer;
-    text-transform: capitalize;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #0000000b;
-}
-
-tbody tr {
-    --delay: .1s;
-    transition: .5s ease-in-out var(--delay), background-color 0s;
-}
-
-tbody tr.hide {
-    opacity: 0;
-    transform: translateX(100%);
-}
-
-tbody tr:hover {
-    background-color: #fff6 !important;
-}
-
-tbody tr td,
-tbody tr td p,
-tbody tr td img {
-    transition: .2s ease-in-out;
-}
-
-tbody tr.hide td,
-tbody tr.hide td p {
-    padding: 0;
-    font: 0 / 0 sans-serif;
-    transition: .2s ease-in-out .5s;
-}
-
-tbody tr.hide td img {
-    width: 0;
-    height: 0;
-    transition: .2s ease-in-out .5s;
-}
-
-.status {
-    padding: .4rem 0;
-    border-radius: 2rem;
-    text-align: center;
-}
-
-.status.commercial {
-    background-color: #86e49d;
-    color: #006b21;
-}
-
-.status.admin {
-    background-color: #d893a3;
-    color: #b30021;
-}
-
-.status.qualificateur {
-    background-color: #ebc474;
-}
-
-.status.shipped {
-    background-color: #6fcaea;
-}
-
-
-@media (max-width: 1000px) {
-    td:not(:first-of-type) {
-        min-width: 12.1rem;
-    }
-}
-
-thead th span.icon-arrow {
-    display: inline-block;
-    width: 1.3rem;
-    height: 1.3rem;
-    border-radius: 50%;
-    border: 1.4px solid transparent;
-
-    text-align: center;
-    font-size: 1rem;
-
-    margin-left: .5rem;
-    transition: .2s ease-in-out;
-}
-
-thead th:hover span.icon-arrow{
-    border: 1.4px solid #6c00bd;
-}
-
-thead th:hover {
-    color: #6c00bd;
-}
-
-thead th.active span.icon-arrow{
-    background-color: #6c00bd;
-    color: #fff;
-}
-
-thead th.asc span.icon-arrow{
-    transform: rotate(180deg);
-}
-
-thead th.active,tbody td.active {
-    color: #6c00bd;
-}
-.export__file {
-    position: relative;
-    margin-left: 1rem;
-}
-
-.export__file .export__file-btn {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    background: #fff6 url(images/export.png) center / 80% no-repeat;
-    border-radius: 50%;
-    transition: .2s ease-in-out;
-}
-
-.export__file .export__file-btn:hover {
-    background-color: #fff;
-    transform: scale(1.15);
-    cursor: pointer;
-}
-
-.export__file input {
-    display: none;
-}
-
-.export__file .export__file-options {
-    position: absolute;
-    right: 0;
-    width: 12rem;
-    border-radius: .5rem;
-    overflow: hidden;
-    text-align: center;
-    opacity: 0;
-    transform: scale(.8);
-    transform-origin: top right;
-    box-shadow: 0 .2rem .5rem #0004;
-    transition: .2s;
-    z-index: -1;
-}
-
-.export__file input:checked + .export__file-options {
-    opacity: 1;
-    transform: scale(1);
-    z-index: 100;
-}
-
-.export__file .export__file-options label {
-    display: block;
-    width: 100%;
-    padding: .6rem 0;
-    background-color: #f2f2f2;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    transition: .2s ease-in-out;
-}
-
-.export__file .export__file-options label:first-of-type {
-    padding: 1rem 0;
-    background-color: #86e49d !important;
-}
-
-.export__file .export__file-options label:hover {
-    transform: scale(1.05);
-    background-color: #fff;
-    cursor: pointer;
-}
-
-.export__file .export__file-options img {
-    width: 2rem;
-    height: auto;
-}
-
-</style>
+    <link rel="stylesheet" href="{{ asset('css/commVP.css') }}">
 </head>
 
 <body>
@@ -339,18 +22,33 @@ thead th.active,tbody td.active {
     </script>
 @endif
     <main class="table" id="customers_table">
+
         <section class="table__header">
-            <h1>Users</h1>
+
+
+            <h1>Prospects</h1>
 
             <div class="input-group">
+
                 <input type="search" placeholder="Search Data...">
                 <img src="{{ asset('images/search.png') }}" alt="">
 
             </div>
+
+
             <div class="export__file">
-                <label for="export-file" class="export__file-btn" title="Export File"><i class="gg-export"></i></label>
+
+
+<label for="export-file" title="Export File" style="display: inline-block;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-up" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
+    <path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708z"/>
+  </svg>
+</label>
+
                 <input type="checkbox" id="export-file">
                 <div class="export__file-options">
+
                     <label>Export As &nbsp; &#10140;</label>
                     <label for="export-file">
                         <button style="background-color: transparent; border: none;" id="toPDF" class="btn btn-danger">
@@ -360,7 +58,7 @@ thead th.active,tbody td.active {
 
                     <label for="export-file">
                         <button style="background-color: transparent; border: none;" class="btn btn-danger">
-                            <a href="{{ route('admin.users.export', ['format' => 'txt']) }}">
+                            <a href="{{ route('comm.prospect.export', ['format' => 'txt']) }}">
                                 <img src="{{ asset('images/json.png') }}" alt="JSON Icon">
                             </a>
                         </button>
@@ -368,7 +66,7 @@ thead th.active,tbody td.active {
 
                     <label for="export-file">
                         <button style="background-color: transparent; border: none;" class="btn btn-danger">
-                            <a href="{{ route('admin.users.export', ['format' => 'csv']) }}">
+                            <a href="{{ route('comm.prospect.export', ['format' => 'csv']) }}">
                                 <img src="{{ asset('images/csv.png') }}" alt="CSV Icon">
                             </a>
                         </button>
@@ -376,7 +74,7 @@ thead th.active,tbody td.active {
 
                     <label for="export-file">
                         <button style="background-color: transparent; border: none;" class="btn btn-danger">
-                            <a href="{{ route('admin.users.export', ['format' => 'xlsx']) }}">
+                            <a href="{{ route('comm.prospect.export', ['format' => 'xlsx']) }}">
                                 <img src="{{ asset('images/excel.png') }}" alt="Excel Icon">
                             </a>
                         </button>
@@ -389,10 +87,10 @@ thead th.active,tbody td.active {
             <table>
                 <thead>
                     <tr>
-                        <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> ID <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Name <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Email <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Role <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Status <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Created At <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Updated At <span class="icon-arrow">&UpArrow;</span></th>
                         <th class="actions">Actions</th>
@@ -400,32 +98,47 @@ thead th.active,tbody td.active {
                 </thead>
                 <tbody>
 
-                @foreach($users as $user)
+                @foreach($prospects as $prospect)
                     <tr>
-                        <td>{{ $user->id }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td >
-                           <p class="@if ($user->role == 0) status admin @elseif ($user->role == 1) status qualificateur @else status commercial @endif"> @if ($user->role == 0)
-                                Admin
-                            @elseif ($user->role == 1)
-                                Qualificateur
+                        <td>{{ $prospect->id }}</td>
+                        <td>{{ $prospect->name }}</td>
+                        <td>{{ $prospect->email }}</td>
+                        <td>
+                        <p class="
+                        @if ($prospect->status== 0)
+                        status nouveau
+                        @elseif ($prospect->status == 1) status qualifie
+                        @elseif ($prospect->status == 1) status rejete
+                        @elseif ($prospect->status == 1) status converti
+                        @else status cloture
+                        @endif">
+
+                        @if ($prospect->status == 0)
+                                Nouveau
+                            @elseif ($prospect->status == 1)
+                                Qualifié
+                            @elseif ($prospect->status == 2)
+                                Rejeté
+                            @elseif ($prospect->status == 3)
+                                Converti
                             @else
-                                Commercial
-                            @endif</p>
+                                Cloturé
+                            @endif
+                        </p>
                         </td>
-                        <td>{{ $user->created_at }}</td>
-                        <td>{{ $user->updated_at }}</td>
+                        <td>{{ $prospect->created_at }}</td>
+                        <td>{{ $prospect->updated_at }}</td>
                         <td class="actions">
                             <!-- Example of edit and delete links/buttons -->
-                            <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" ><svg style="height:20px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/></svg></a>
-                            @if ($user->id != 1)
-                            <form action="{{ route('admin.users.destroy', ['user' => $user->id]) }}" method="POST" style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button style="border:none;" type="submit"  onclick="return confirm('Are you sure you want to delete this user?')"><svg style="height:20px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#bd0000" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg></button>
-                            </form>
-                            @endif
+                            <a href="{{ route('comm.prospect.edit', ['prospect' => $prospect->id]) }}" style="margin-right: 10px; display: inline-block;">
+    <svg style="height:20px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/>
+    </svg>
+</a>
+
+
+
+
 
 
                         </td>
@@ -437,6 +150,7 @@ thead th.active,tbody td.active {
         </section>
 
     </main>
+
     <script>
          document.addEventListener('DOMContentLoaded', function () {
         const searchInput = document.querySelector('.input-group input');
@@ -731,10 +445,4 @@ const downloadFile = function (data, fileType, fileName = '') {
 </body>
 
 
-@endsection
-@section('profilename')
-SaifeddineNajmi
-@endsection
-@section('role')
-Admin
 @endsection

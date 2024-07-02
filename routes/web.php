@@ -47,8 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/Qualificateur/ViewProspects/{prospect}', [QualificateurController::class, 'updatePros'])->name('qualif.prospect.update');
     Route::get('/Qualificateur/ViewProspects/export/{format}', [QualificateurController::class, 'exportPros'])->name('qualif.prospect.export');
     Route::get('/Qualificateur/ViewProspects/pdf', 'QualificateurController@showPdfPros')->name('qualif.prospect.pdf');
-
-});
+   });
 Route::middleware('auth')->group(function () {
     Route::get('/Commercial/ViewProspects', [CommercialController::class, 'viewprospects'])->name('comm.prospects');
     Route::get('/Commercial/ViewProspects/{prospect}/edit', [CommercialController::class, 'editPros'])->name('comm.prospect.edit');

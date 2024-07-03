@@ -18,7 +18,56 @@
     size: landscape;
     margin: 0;
 }*/
+/*edit pros form style*/
+.hidden {
+    display: none;
+}
 
+.form-container {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 80%;
+    max-width: 600px;
+    background-color: #fff;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000; /* Ensure it appears above other content */
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.form-container.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+/* Optional: Style the form fields and buttons */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#cancelButton {
+    margin-left: 10px;
+}
 body {
     min-height: 100vh;
     background: url(images/html_table.jpg) center / cover;
@@ -135,7 +184,7 @@ thead th {
     position: sticky;
     top: 0;
     left: 0;
-    background-color: #d5d1defe;
+    background-color: #F1E5D1;
     cursor: pointer;
     text-transform: capitalize;
 }

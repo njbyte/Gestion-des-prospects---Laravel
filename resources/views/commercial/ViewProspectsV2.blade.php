@@ -1,4 +1,4 @@
-@extends('layouts.SidebarAdmin')
+@extends('layouts.navbar')
 
 @section('content')
 <head>
@@ -7,6 +7,33 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Convert | Export html Table to CSV & EXCEL File</title>
     <link rel="stylesheet" href="{{ asset('css/commVP.css') }}">
+    <style>
+        .alert {
+            position: fixed;
+            top:20px;
+            right: 30px;
+            transform: translateX(-50%);
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 5s ease-in-out, visibility 5s ease-in-out;
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 20px;
+            visibility: visible;
+            border: 1px solid #1e7e34;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+        }
+
+        .alert.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
 </head>
 
 <body>

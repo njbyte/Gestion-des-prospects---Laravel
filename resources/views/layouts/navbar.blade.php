@@ -26,7 +26,7 @@
             left: -10%;
             width: 120%;
             height: 120%;
-            background-image: url("{{ asset('assets/bg.png') }}");
+            background-image: url("{{ asset('assets/bg.jpg') }}");
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -38,21 +38,24 @@
         }
 
         .navbar {
-            z-index: 1;
-            top: 0;
-            left: 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            height: 72px;
-            padding-left: 20px;
-            padding-right: 72px;
-             /* Adjusted background color with opacity */
-            backdrop-filter: blur(7px); /* Apply blur to the background */
-            color: #f9f9f9;
-            transition: background-color 0.5s ease; /* Smooth transition for background color */
-        }
+    z-index: 1;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 72px;
+    padding-left: 20px;
+    padding-right: 72px;
+
+background: rgb(190,196,192);
+background: linear-gradient(180deg, rgba(190,196,192,1) 36%, rgba(246,247,249,1) 100%);
+    color: #f9f9f9;
+    transition: background-color 0.5s ease; /* Smooth transition for background color */
+}
+
+
 
         .navbar > button {
             font-size: 28px;
@@ -140,7 +143,7 @@
             }
         }
         .content {
-            margin-top: 72px;
+            margin-top: 80px;
              /* Ensure content starts below the navbar */
 
 

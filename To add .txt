@@ -21,3 +21,11 @@ side bar change status of each user admin - comm - quali
 Requirement:
 composer require maatwebsite/excel
 composer require barryvdh/laravel-dompdf
+
+to run
+composer install
+
+composer require laravel/ui
+php artisan ui vue --auth
+npm install
+npm run dev

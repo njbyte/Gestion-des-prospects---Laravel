@@ -5,16 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Pros;
+use Illuminate\Support\Facades\Auth;
 //exporting lib
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CommercialProspectsExport;
 use PDF;
 class CommercialController extends Controller
 {
+
     public function viewprospects(Request $request)
     {
         // Fetch all users
          //<!-- 0: Nouveau / 1:Qualifié 2: Rejeté 3: converti 4: cloturé-->
+         $auth = Auth::user(); // Fetch authenticated user
+         $userName = $auth->name;
 
             $search = $request->input('search');
 
@@ -26,12 +30,15 @@ class CommercialController extends Controller
                 })
                 ->get();
 
-            return view('commercial.ViewProspectsV2', compact('prospects'));
+            return view('commercial.ViewProspectsV2', compact('prospects','userName'));
         }
 
     public function editPros(Pros $prospect)
     {
-        return view('commercial.EditPros', compact('prospect'));
+        $auth = Auth::user(); // Fetch authenticated user
+        $userName = $auth->name;
+
+        return view('commercial.EditPros', compact('prospect','userName'));
     }
 
     public function updatePros(Request $request, Pros $prospect)

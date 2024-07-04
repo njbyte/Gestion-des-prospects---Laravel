@@ -13,26 +13,43 @@ use PDF;
 use Illuminate\Support\Facades\Log;
 
 
+
 class AdminController extends Controller
 {
-    public function index(Request $request)
-    {
 
-            $search = $request->input('search');
+    public function showProfile()
+{
+    // Retrieve authenticated user
+    $user = Auth::user();
 
-            $users = User::query()
-                ->where('name', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%")
-                ->orWhere(function ($query) use ($search) {
-                    $query->where('role', 0)->whereRaw("0 LIKE ?", ["%{$search}%"])
-                        ->orWhere('role', 1)->whereRaw("1 LIKE ?", ["%{$search}%"])
-                        ->orWhere('role', 2)->whereRaw("2 LIKE ?", ["%{$search}%"]);
-                })
-                ->get();
+    // Pass the user's name to the view
+    return view('profile', [
+        'userName' => $user->name,
+    ]);
+}
 
-            return view('admin.ViewUsers2', compact('users'));
 
-    }
+public function index(Request $request)
+{
+    $auth = Auth::user(); // Fetch authenticated user
+    $userName = $auth->name; // Assuming you want to pass the authenticated user's name
+
+    $search = $request->input('search');
+
+    $users = User::query()
+        ->where('name', 'like', "%{$search}%")
+        ->orWhere('email', 'like', "%{$search}%")
+        ->orWhere(function ($query) use ($search) {
+            $query->where('role', 0)->whereRaw("0 LIKE ?", ["%{$search}%"])
+                ->orWhere('role', 1)->whereRaw("1 LIKE ?", ["%{$search}%"])
+                ->orWhere('role', 2)->whereRaw("2 LIKE ?", ["%{$search}%"]);
+        })
+        ->get();
+
+    // Pass variables using compact function correctly
+    return view('admin.ViewUsers2', compact('users', 'userName'));
+}
+
     public function logout(Request $request)
     {
         Auth::logout();
@@ -49,9 +66,11 @@ class AdminController extends Controller
     {
         // Fetch all users
         $prospects = Pros::all();
+        $auth = Auth::user(); // Fetch authenticated user
+    $userName = $auth->name;
 
         // Pass users to the view
-        return view('admin.ViewProspectsV2', compact('prospects'));
+        return view('admin.ViewProspectsV2', compact('prospects','userName'));
     }
 
     public function create()
@@ -112,11 +131,18 @@ class AdminController extends Controller
     }
     public function edit(User $user)
     {
-        return view('admin.EditUser', compact('user'));
+        $auth = Auth::user(); // Fetch authenticated user
+        $userName = $auth->name;
+
+
+        return view('admin.EditUser', compact('user','userName'));
     }
     public function editPros(Pros $prospect)
     {
-        return view('admin.EditPros', compact('prospect'));
+        $auth = Auth::user(); // Fetch authenticated user
+        $userName = $auth->name;
+
+        return view('admin.EditPros', compact('prospect','userName'));
     }
 
     public function update(Request $request, User $user)
@@ -143,6 +169,7 @@ class AdminController extends Controller
 
     public function updatePros(Request $request, Pros $prospect)
     {
+
         // Validate request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',

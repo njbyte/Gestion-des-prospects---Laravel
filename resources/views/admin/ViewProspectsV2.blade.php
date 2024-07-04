@@ -301,28 +301,32 @@
     <script>
 //create Pros :
 document.getElementById('newProspectLink').addEventListener('click', function(event) {
-            event.preventDefault();
-            const formContainer = document.getElementById('formContainer');
-            if (formContainer.classList.contains('show')) {
-                formContainer.classList.remove('show');
-                setTimeout(() => {
-                    formContainer.classList.add('hidden');
-                }, 300); // Duration matches the CSS transition time
-            } else {
-                formContainer.classList.remove('hidden');
-                setTimeout(() => {
-                    formContainer.classList.add('show');
-                }, 10); // Delay to ensure the transition applies
-            }
-        });
-
-        document.getElementById('cancelButton').addEventListener('click', function() {
-            const formContainer = document.getElementById('formContainer');
+        event.preventDefault();
+        const formContainer = document.getElementById('formContainer');
+        if (formContainer.classList.contains('show')) {
             formContainer.classList.remove('show');
+            document.body.classList.remove('form-active');
             setTimeout(() => {
                 formContainer.classList.add('hidden');
             }, 300); // Duration matches the CSS transition time
-        });
+        } else {
+            formContainer.classList.remove('hidden');
+            setTimeout(() => {
+                formContainer.classList.add('show');
+                document.body.classList.add('form-active');
+            }, 10); // Delay to ensure the transition applies
+        }
+    });
+
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        const formContainer = document.getElementById('formContainer');
+        formContainer.classList.remove('show');
+        document.body.classList.remove('form-active');
+        setTimeout(() => {
+            formContainer.classList.add('hidden');
+        }, 300); // Duration matches the CSS transition time
+    });
+
 
 ////////Search
          document.addEventListener('DOMContentLoaded', function () {
@@ -618,4 +622,10 @@ const downloadFile = function (data, fileType, fileName = '') {
 </body>
 
 
+@endsection
+@section('profilename')
+{{ $userName }}
+@endsection
+@section('role')
+Admin
 @endsection

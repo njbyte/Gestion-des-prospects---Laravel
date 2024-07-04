@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Pros;
 //exporting lib
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CommercialProspectsExport;
 
@@ -14,8 +15,12 @@ use App\Exports\QualificateurProspectsExport;
 use PDF;
 class QualificateurController extends Controller
 {
+
     public function viewprospects(Request $request)
     {
+        $auth = Auth::user(); // Fetch authenticated user
+        $userName = $auth->name;
+
         // Fetch all users
         $search = $request->input('search');
 
@@ -33,7 +38,7 @@ class QualificateurController extends Controller
 
 
 
-            return view('qualificateur.ViewProspectsV2', compact('prospects'));
+            return view('qualificateur.ViewProspectsV2', compact('prospects','userName'));
     }
 
     public function editPros(Pros $prospect)

@@ -1,4 +1,4 @@
-@extends('layouts.SidebarAdmin')
+@extends('layouts.navbar')
 
 @section('content')
 <head>
@@ -8,6 +8,32 @@
     <title>Convert | Export html Table to CSV & EXCEL File</title>
 
 <style>
+    .alert {
+            position: fixed;
+            top:20px;
+            right: 30px;
+            transform: translateX(-50%);
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 5s ease-in-out, visibility 5s ease-in-out;
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 20px;
+            visibility: visible;
+            border: 1px solid #1e7e34;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+        }
+
+        .alert.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
     * {
     margin: 0;
     padding: 0;
@@ -40,7 +66,7 @@ main.table {
     width: 82vw;
     height: 90vh;
     background-color: #fff5;
-
+    z-index: 1;
     backdrop-filter: blur(7px);
     box-shadow: 0 .4rem .8rem #0005;
     border-radius: .8rem;
@@ -322,15 +348,152 @@ thead th.active,tbody td.active {
     width: 2rem;
     height: auto;
 }
+/* custom.css */
+
+/* General body styling to include background blur when form is active */
+
+/* Form container */
+
+/* Form container */
+.container {
+    max-width: 600px;
+    margin: 5px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    -webkit-border-top-left-radius: 30px;
+    -webkit-border-bottom-right-radius: 30px;
+    -moz-border-radius-topleft: 30px;
+    -moz-border-radius-bottomright: 30px;
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    animation: fadeInSlideUp 0.5s ease-in-out;
+}
+
+.form-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-control,
+.form-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.form-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23808080" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path d="M11.8 3.2a.75.75 0 0 0-1.06 0L6 8.94 1.26 4.2a.75.75 0 1 0-1.06 1.06l5 5a.75.75 0 0 0 1.06 0l5-5a.75.75 0 0 0 0-1.06" fill-rule="evenodd"></path></svg>');
+    background-repeat: no-repeat;
+    background-position-x: calc(100% - 10px);
+    background-position-y: 50%;
+    padding-right: 30px;
+}
+
+.btn-primary {
+    background-color: #FF9800;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-primary:hover {
+    background-color: #4CAF50;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.has-error .form-control {
+    border-color: #ff0000;
+}
+
+/* Ensure the form is hidden initially */
+.hidden {
+    display: none;
+}
+
+/* Overlay effect for the background */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Higher than other elements */
+    display: none;
+}
+
+/* Style for the form container to be centered */
+.form-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Higher than the overlay */
+    width: 90%; /* Adjust as needed */
+    max-width: 500px;
+    -webkit-border-top-left-radius: 30px;
+    -webkit-border-bottom-right-radius: 30px;
+    -moz-border-radius-topleft: 30px;
+    -moz-border-radius-bottomright: 30px;
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* To blur the background when the form is active */
+body.blur {
+    filter: blur(5px);
+    overflow: hidden; /* Prevent scrolling */
+}
+
+/* Keyframes for fade-in and slide-in animation */
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 </style>
 </head>
 
 <body>
 @if(session('success'))
-    <div id="flash-message" class="alert alert-success" role="alert" style="opacity: 1; transition: opacity 5s ease-in-out;background-color: #28a745; color: #fff; padding: 10px; margin-bottom: 20px;">
+<div id="flash-message" class="alert alert-success" role="alert" style="z-index:1;opacity: 1; transition: opacity 5s ease-in-out;background-color: #28a745; color: #fff; padding: 10px; margin-bottom: 20px;">
         {{ session('success') }}
     </div>
+
     <script>
         // Automatically close the flash message after 5 seconds
         setTimeout(function() {
@@ -348,14 +511,25 @@ thead th.active,tbody td.active {
 
             </div>
             <div class="export__file">
-                <label for="export-file" class="export__file-btn" title="Export File"><i class="gg-export"></i></label>
+            <a title="New User" href="#" id="newUserLink" style="margin-right: 10px; display: inline-block;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 11C10.2091 11 12 9.20914 12 7C12 4.79086 10.2091 3 8 3C5.79086 3 4 4.79086 4 7C4 9.20914 5.79086 11 8 11ZM8 9C9.10457 9 10 8.10457 10 7C10 5.89543 9.10457 5 8 5C6.89543 5 6 5.89543 6 7C6 8.10457 6.89543 9 8 9Z" fill="currentColor" /><path d="M11 14C11.5523 14 12 14.4477 12 15V21H14V15C14 13.3431 12.6569 12 11 12H5C3.34315 12 2 13.3431 2 15V21H4V15C4 14.4477 4.44772 14 5 14H11Z" fill="currentColor" /><path d="M18 7H20V9H22V11H20V13H18V11H16V9H18V7Z" fill="black" /></svg>
+    </a>
+
+    <label for="export-file" title="Export File" style="display: inline-block;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor" class="bi bi-box-arrow-up" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1z"/>
+    <path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708z"/>
+  </svg>
+</label>
                 <input type="checkbox" id="export-file">
                 <div class="export__file-options">
-                    <label>Export As &nbsp; &#10140;</label>
+                <label>Export As &nbsp; &#10140;</label>
+
                     <label for="export-file">
                         <button style="background-color: transparent; border: none;" id="toPDF" class="btn btn-danger">
                             <img src="{{ asset('images/pdf.png') }}" alt="PDF Icon">
                         </button>
+
                     </label>
 
                     <label for="export-file">
@@ -382,6 +556,7 @@ thead th.active,tbody td.active {
                         </button>
                     </label>
                 </div>
+
             </div>
 
         </section>
@@ -432,12 +607,81 @@ thead th.active,tbody td.active {
                     </tr>
                 @endforeach
             </tbody>
+
             </table>
 
         </section>
+        <div id="formContainer" class="form-container hidden">
+    <div class="container">
+        <h1 style="margin-bottom:20px;">Create New User</h1>
 
+        <form method="POST" action="{{ route('admin.users.store') }}">
+            @csrf
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <select class="form-select" id="role" name="role" required>
+                    <option value="0">Admin</option>
+                    <option value="1">Qualificateur</option>
+                    <option value="2">Commercial</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create User</button>
+            <button type="button" id="cancelButton" class="btn btn-secondary">Cancel</button>
+        </form>
+    </div>
+</div>
     </main>
+
+
     <script>
+//Create user
+document.getElementById('newUserLink').addEventListener('click', function(event) {
+        event.preventDefault();
+        const formContainer = document.getElementById('formContainer');
+        if (formContainer.classList.contains('show')) {
+            formContainer.classList.remove('show');
+            document.body.classList.remove('form-active');
+            setTimeout(() => {
+                formContainer.classList.add('hidden');
+            }, 300); // Duration matches the CSS transition time
+        } else {
+            formContainer.classList.remove('hidden');
+            setTimeout(() => {
+                formContainer.classList.add('show');
+                document.body.classList.add('form-active');
+            }, 10); // Delay to ensure the transition applies
+        }
+    });
+
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        const formContainer = document.getElementById('formContainer');
+        formContainer.classList.remove('show');
+        document.body.classList.remove('form-active');
+        setTimeout(() => {
+            formContainer.classList.add('hidden');
+        }, 300); // Duration matches the CSS transition time
+    });
+
+
+
+///////
          document.addEventListener('DOMContentLoaded', function () {
         const searchInput = document.querySelector('.input-group input');
         const tableRows = document.querySelectorAll('tbody tr');
@@ -733,7 +977,7 @@ const downloadFile = function (data, fileType, fileName = '') {
 
 @endsection
 @section('profilename')
-SaifeddineNajmi
+{{ $userName }}
 @endsection
 @section('role')
 Admin

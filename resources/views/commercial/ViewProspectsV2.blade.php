@@ -473,3 +473,9 @@ const downloadFile = function (data, fileType, fileName = '') {
 
 
 @endsection
+@section('profilename')
+{{ $userName }}
+@endsection
+@section('role')
+Commercial
+@endsection

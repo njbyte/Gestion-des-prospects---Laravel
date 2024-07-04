@@ -1,6 +1,6 @@
 <!-- resources/views/users/create.blade.php -->
 
-@extends('layouts.SidebarAdmin')
+@extends('layouts.navbar')
 
 @section('content')
 <style>

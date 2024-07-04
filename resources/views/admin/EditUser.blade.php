@@ -1,4 +1,4 @@
-@extends('layouts.SidebarAdmin')
+@extends('layouts.navbar')
 
 @section('content')
 <style>
@@ -7,30 +7,25 @@
 /* Form container */
 .container {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 5px auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    -webkit-border-top-left-radius: 55px;
+-webkit-border-bottom-right-radius: 55px;
+-moz-border-radius-topleft: 55px;
+-moz-border-radius-bottomright: 55px;
+border-top-left-radius: 55px;
+border-bottom-right-radius: 55px;
 }
 
-/* Form labels */
 .form-label {
     font-weight: 600;
     margin-bottom: 8px;
 }
 
-/* Form input fields */
-.form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 16px;
-    font-size: 14px;
-}
-
-/* Form select dropdown */
+.form-control,
 .form-select {
     width: 100%;
     padding: 10px;
@@ -40,9 +35,19 @@
     font-size: 14px;
 }
 
-/* Form submit button */
+.form-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23808080" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path d="M11.8 3.2a.75.75 0 0 0-1.06 0L6 8.94 1.26 4.2a.75.75 0 1 0-1.06 1.06l5 5a.75.75 0 0 0 1.06 0l5-5a.75.75 0 0 0 0-1.06" fill-rule="evenodd"></path></svg>');
+    background-repeat: no-repeat;
+    background-position-x: calc(100% - 10px);
+    background-position-y: 50%;
+    padding-right: 30px;
+}
+
 .btn-primary {
-    background-color: #007bff;
+    background-color: #FF9800;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -52,21 +57,63 @@
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #4CAF50;
 }
 
-/* Center the button */
-.btn-primary {
-    display: block;
-    margin: 0 auto;
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-/* Error styles (customize as needed) */
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
 .has-error .form-control {
     border-color: #ff0000;
 }
 
-/* Add any other custom styles you'd like! */
+/* Ensure the form is hidden initially */
+.hidden {
+    display: none;
+}
+
+/* Overlay effect for the background */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Higher than other elements */
+    display: none;
+}
+
+/* Style for the form container to be centered */
+.form-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Higher than the overlay */
+    width: 90%; /* Adjust as needed */
+    max-width: 500px;
+}
+
+/* To blur the background when the form is active */
+body.blur {
+    filter: blur(50px);
+    overflow: hidden; /* Prevent scrolling */
+}
 
 </style>
 <body>
@@ -101,13 +148,34 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Update User</button>
+            <button type="button" id="cancelButton" class="btn btn-secondary">Cancel</button>
         </form>
     </div>
 </body>
+<script type="text/javascript">
+        function openForm() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('form-container').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        function closeForm() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('form-container').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Allow scrolling
+        }
+
+        document.getElementById('cancelButton').addEventListener('click', function() {
+            window.history.back();
+        });
+
+        // Assuming you have a button or some trigger to open the form
+        // Example: document.getElementById('editButton').addEventListener('click', openForm);
+    </script>
 @endsection
 
 @section('profilename')
-SaifeddineNajmi
+{{ $userName }}
 @endsection
 
 @section('role')

@@ -474,3 +474,9 @@ const downloadFile = function (data, fileType, fileName = '') {
 
 
 @endsection
+@section('profilename')
+{{ $userName }}
+@endsection
+@section('role')
+Qualificateur
+@endsection

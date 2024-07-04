@@ -18,6 +18,11 @@ class CommercialController extends Controller
         // Fetch all users
          //<!-- 0: Nouveau / 1:Qualifié 2: Rejeté 3: converti 4: cloturé-->
          $auth = Auth::user(); // Fetch authenticated user
+
+
+        $role=$auth->role;
+
+        if ($role == 1) {
          $userName = $auth->name;
 
             $search = $request->input('search');
@@ -31,18 +36,30 @@ class CommercialController extends Controller
                 ->get();
 
             return view('commercial.ViewProspectsV2', compact('prospects','userName'));
-        }
+        }else {
+            return view('AccessDenied');
+        }}
 
     public function editPros(Pros $prospect)
     {
         $auth = Auth::user(); // Fetch authenticated user
         $userName = $auth->name;
 
+        $role=$auth->role;
+
+        if ($role == 1) {
         return view('commercial.EditPros', compact('prospect','userName'));
-    }
+    }else {
+        return view('AccessDenied');
+    }}
 
     public function updatePros(Request $request, Pros $prospect)
-    {
+    { $auth = Auth::user(); // Fetch authenticated user
+
+
+        $role=$auth->role;
+
+        if ($role == 1) {
         // Validate request data
         $validatedData = $request->validate([
 
@@ -58,7 +75,9 @@ class CommercialController extends Controller
         ]);
 
         return redirect()->route('comm.prospects')->with('success', 'Prospect updated successfully.');
-    }
+    }else {
+        return view('AccessDenied');
+    }}
 
 
     public function exportPros($format)

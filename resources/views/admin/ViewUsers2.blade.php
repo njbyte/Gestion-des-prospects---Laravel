@@ -490,17 +490,23 @@ body.blur {
 
 <body>
 @if(session('success'))
-<div id="flash-message" class="alert alert-success" role="alert" style="z-index:1;opacity: 1; transition: opacity 5s ease-in-out;background-color: #28a745; color: #fff; padding: 10px; margin-bottom: 20px;">
+    <div id="flash-message" class="alert alert-success" role="alert" style="z-index:1; opacity: 1; transition: opacity 5s ease-in-out; background-color: #28a745; color: #fff; padding: 10px; margin-bottom: 20px;">
         {{ session('success') }}
     </div>
+@endif
 
-    <script>
+@if(session('error'))
+    <div id="flash-message" class="alert alert-danger" role="alert" style="z-index:1; opacity: 1; transition: opacity 5s ease-in-out; background-color: #dc3545; color: #fff; padding: 10px; margin-bottom: 20px;">
+        {{ session('error') }}
+    </div>
+@endif
+
+<script>
         // Automatically close the flash message after 5 seconds
         setTimeout(function() {
             document.getElementById('flash-message').style.display = 'none';
         }, 5000);
     </script>
-@endif
     <main class="table" id="customers_table">
         <section class="table__header">
             <h1>Users</h1>

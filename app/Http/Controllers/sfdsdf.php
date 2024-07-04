@@ -36,7 +36,7 @@ public function index(Request $request)
         })
         ->get();
         if ($role == 0) {
-            return view('admin.ViewUsers2', compact('users', 'userName'));
+            return view('admin.ViewUsers2', compact('user', 'userName'));
         } else {
             return view('AccessDenied');
         }
@@ -72,37 +72,27 @@ public function index(Request $request)
     }
 
     public function create()
-    {$auth = Auth::user();
+    {
         $role=$auth->role;
         // Pass users to the view
         if ($role == 0) {
-            return view('admin.CreateUser');
+            return view('admin.CreateUser', compact('prospects', 'userName'));
         } else {
             return view('AccessDenied');
         }
         // Logic to show create user form
-
+        // Example:
+        return view('admin.CreateUser');
     }
 
     public function createPros()
     {
         // Logic to show create Pros form
         // Example:
-        $auth = Auth::user();
-        $role=$auth->role;
-        // Pass users to the view
-        if ($role == 0) {
-            return view('admin.CreatePros');
-        } else {
-            return view('AccessDenied');
-        }
-
+        return view('admin.CreatePros');
     }
-
-
-public function store(Request $request)
-{
-    try {
+    public function store(Request $request)
+    {
         // Validate request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -112,40 +102,19 @@ public function store(Request $request)
         ]);
 
         // Create new user
-        $user = User::create([
+        User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'role' => $validatedData['role'],
             'password' => bcrypt($validatedData['password']),
         ]);
 
-        // Check if user was successfully created
-        if ($user) {
-            return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
-        } else {
-            return redirect()->route('admin.users.index')->with('error', 'Failed to create user.');
-        }
 
-    } catch (QueryException $e) {
-        // Handle specific database errors
-        $errorCode = $e->errorInfo[1];
-        if ($errorCode === 1062) { // MySQL error code for unique constraint violation
-            return redirect()->back()->withInput()->withErrors(['email' => 'The email has already been taken.']);
-        } else {
-            return redirect()->route('admin.users.index')->with('error', 'Database error: ' . $e->getMessage());
-        }
+        return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
-}
-
-
 
     public function storePros(Request $request)
     {
-        if (!$request->has(['name', 'email', 'status'])) {
-            // If the required data is not present, redirect to an error page
-            return view('errors.error');
-        }
-
         // Validate request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -183,20 +152,11 @@ public function store(Request $request)
         $userName = $auth->name;
         $role=$auth->role;
 
-        if ($role == 0) {
-            return view('admin.EditPros', compact('prospect', 'userName'));
-        } else {
-            return view('AccessDenied');
-        }
-
+        return view('admin.EditPros', compact('prospect','userName'));
     }
 
     public function update(Request $request, User $user)
-    {$auth = Auth::user();
-        $role=$auth->role;
-
-        if ($role == 0) {
-
+    {
         // Validate request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -215,18 +175,11 @@ public function store(Request $request)
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
-    } else {
-        return view('AccessDenied');
-    }
-
     }
 
     public function updatePros(Request $request, Pros $prospect)
     {
-        $auth = Auth::user();
-        $role=$auth->role;
 
-        if ($role == 0) {
         // Validate request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -244,31 +197,19 @@ public function store(Request $request)
         ]);
 
         return redirect()->route('admin.prospects')->with('success', 'Prospect updated successfully.');
-    }else {
-        return view('AccessDenied');
-    }}
+    }
 
     public function destroy(User $user)
-    {$auth = Auth::user();
-        $role=$auth->role;
-
-        if ($role == 0) {
+    {
         $user->delete();
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
-    }else {
-        return view('AccessDenied');
-    }}
+    }
 
     public function destroyPros(Pros $prospect)
-    {$auth = Auth::user();
-        $role=$auth->role;
-
-        if ($role == 0) {
+    {
         $prospect->delete();
         return redirect()->route('admin.prospects')->with('success', 'Prospect deleted successfully.');
-    }else {
-        return view('AccessDenied');
-    }}
+    }
 
 
     public function export($format)

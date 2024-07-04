@@ -381,7 +381,7 @@ json_btn.onclick = () => {
     downloadFile(json, 'json')
 }
 
-// 5. Converting HTML table to CSV File
+// 5. Converting HssTML table to CSV File
 
 const csv_btn = document.querySelector('#toCSV');
 

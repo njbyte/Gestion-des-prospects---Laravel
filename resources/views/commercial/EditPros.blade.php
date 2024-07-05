@@ -172,10 +172,21 @@ body.blur {
     </script>
 @endsection
 
+
+
 @section('profilename')
-SaifeddineNajmi
+{{ $userName }}
 @endsection
 
 @section('role')
 Commercial
+@endsection
+
+@section('hide')
+"display: none;"
+@endsection
+
+@section('routeprospects')
+
+"{{ route('comm.prospects') }}"
 @endsection

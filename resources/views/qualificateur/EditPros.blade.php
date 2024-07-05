@@ -174,8 +174,18 @@ body.blur {
 @endsection
 
 @section('profilename')
-SaifeddineNajmi
+{{ $userName }}
 @endsection
+
 @section('role')
 Qualificateur
+@endsection
+
+@section('hide')
+"display: none;"
+@endsection
+
+@section('routeprospects')
+
+"{{ route('qualif.prospects') }}"
 @endsection

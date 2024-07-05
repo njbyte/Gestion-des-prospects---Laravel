@@ -28,4 +28,10 @@ composer install
 composer require laravel/ui
 php artisan ui vue --auth
 npm install
-npm run dev
+
+
+
+
+must be running :
+1-npm run dev
+2-php artisan serve

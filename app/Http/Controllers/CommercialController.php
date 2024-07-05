@@ -22,7 +22,7 @@ class CommercialController extends Controller
 
         $role=$auth->role;
 
-        if ($role == 1) {
+        if ($role == 2) {
          $userName = $auth->name;
 
             $search = $request->input('search');
@@ -47,7 +47,7 @@ class CommercialController extends Controller
 
         $role=$auth->role;
 
-        if ($role == 1) {
+        if ($role == 2) {
         return view('commercial.EditPros', compact('prospect','userName'));
     }else {
         return view('AccessDenied');
@@ -59,7 +59,7 @@ class CommercialController extends Controller
 
         $role=$auth->role;
 
-        if ($role == 1) {
+        if ($role ==2) {
         // Validate request data
         $validatedData = $request->validate([
 

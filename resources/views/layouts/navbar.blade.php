@@ -188,6 +188,97 @@ a:hover {
     margin-right: 5px;
     font-size: 20px;
 }
+.nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: 70px;
+    background-color: transparent; /* Same background color as the body */
+    list-style: none; /* Removing default list styling */
+    left:0;
+    padding: 0;
+    margin-left:1.5rem;
+}
+
+.nav-link {
+    color: #1A2027;
+    text-decoration: none;
+    font-size: 18px;
+    font-family: 'Euclid Circular A', 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 7px;
+    position: relative;
+    height: 100%;
+    transition: color 0.3s ease-in-out;
+
+
+}
+
+.nav-link::before {
+    content: "";
+
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: 3px;
+    left: 0;
+    background-color: #3e95ff;
+    transition: all 0.2s ease-in-out;
+    transform: scale(0);
+    visibility: hidden;
+}
+
+.nav-link:hover {
+    color: #3e95ff;
+}
+
+.nav-link:hover::before {
+    transform: scale(1);
+    visibility: visible;
+}
+
+.nav-link:hover .submenu {
+    height: 85px;
+}
+
+.submenu {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    background-color: #3e95ff;
+    height: 0;
+    line-height: 40px;
+    box-sizing: border-box;
+    transition: height 0.3s ease-in-out;
+}
+
+.nav-link .submenu a {
+    color: #fff;
+    opacity: 0;
+    font-size: 16px;
+    transition: opacity 0.25s;
+}
+
+.nav-link:hover .submenu a {
+    opacity: 1;
+}
+
+.nav-link .submenu a:hover {
+    background: rgb(0 0 0 / 20%);
+}
+.nav-container{
+    display:flex;
+    margin-top:5px;
+
+}
+
 
     </style>
     <meta charset="UTF-8" />
@@ -209,10 +300,16 @@ a:hover {
 <body>
     <div class="background"></div>
 
-    <nav class="navbar">
+    <nav class="navbar"><div class="nav-container">
         <img class="navbar-logo" src="{{ asset('assets/logo.png') }}" />
 
+        <div class="nav-links">
 
+        <a class="nav-link" href="{{ route('admin.users.index') }}" style=@yield('hide')>Users</a>
+
+
+            <a class="nav-link" href=@yield('routeprospects')>Prospects</a>
+        </div></div>
 <div class="logout_name">
     <div style="margin-right:25px;">
         <div class="profile_name">@yield('profilename')</div>

@@ -18,9 +18,15 @@ class QualificateurController extends Controller
 
     public function viewprospects(Request $request)
     {
+
         $auth = Auth::user(); // Fetch authenticated user
         $userName = $auth->name;
+        // Fetch authenticated user
 
+
+        $role=$auth->role;
+
+        if ($role == 1) {
         // Fetch all users
         $search = $request->input('search');
 
@@ -39,15 +45,25 @@ class QualificateurController extends Controller
 
 
             return view('qualificateur.ViewProspectsV2', compact('prospects','userName'));
-    }
+    }else {
+        return view('AccessDenied');
+    }}
 
     public function editPros(Pros $prospect)
-    {
-        return view('qualificateur.EditPros', compact('prospect'));
-    }
+    { $auth = Auth::user();
+        $role=$auth->role;
+        $userName = $auth->name;
+        if ($role == 1) {
+        return view('qualificateur.EditPros', compact('prospect','userName'));
+    }else {
+        return view('AccessDenied');
+    }}
 
     public function updatePros(Request $request, Pros $prospect)
-    {
+    {$auth = Auth::user();
+        $role=$auth->role;
+
+        if ($role == 1) {
         // Validate request data
         $validatedData = $request->validate([
 
@@ -63,7 +79,11 @@ class QualificateurController extends Controller
         ]);
 
         return redirect()->route('qualif.prospects')->with('success', 'Prospect updated successfully.');
-    }
+    }else {
+        return view('AccessDenied');
+    }}
+
+
     public function exportPros($format)
     {
         if ($format === 'xlsx') {

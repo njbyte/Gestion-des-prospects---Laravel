@@ -1,3 +1,5 @@
+<div id="loader"></div>
+    <div id="content" style="display: none;">
 @extends('layouts.navbar')
 
 @section('content')
@@ -177,8 +179,26 @@
         </section>
 
     </main>
-
+</div>
     <script>
+/////loader
+document.addEventListener("DOMContentLoaded", function() {
+    // Wait until the page is fully loaded
+    window.onload = function() {
+        // Set a delay (e.g., 2 seconds)
+        setTimeout(function() {
+            // Hide the loader
+            document.getElementById('loader').style.display = 'none';
+
+            // Show the main content
+            document.getElementById('content').style.display = 'block';
+        }, 1000);
+    };
+});
+
+
+
+/////
          document.addEventListener('DOMContentLoaded', function () {
         const searchInput = document.querySelector('.input-group input');
         const tableRows = document.querySelectorAll('tbody tr');
@@ -473,9 +493,20 @@ const downloadFile = function (data, fileType, fileName = '') {
 
 
 @endsection
+
 @section('profilename')
 {{ $userName }}
 @endsection
+
 @section('role')
 Commercial
+@endsection
+
+@section('hide')
+"display: none;"
+@endsection
+
+@section('routeprospects')
+
+"{{ route('comm.prospects') }}"
 @endsection

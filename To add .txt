@@ -21,6 +21,8 @@ side bar change status of each user admin - comm - quali
 Requirement:
 composer require maatwebsite/excel
 composer require barryvdh/laravel-dompdf
+composer require guzzlehttp/guzzle
+
 
 to run
 composer install

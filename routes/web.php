@@ -62,4 +62,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/send-test-email', function () {
+    $details = [
+        'title' => 'Test Email from Laravel',
+        'body' => 'This is a test email sent from a Laravel application.'
+    ];
+
+    Mail::send('emails.test', $details, function($message) {
+        $message->to('recipient@example.com', 'Recipient Name')
+                ->subject('Test Email');
+    });
+
+    return 'Email Sent';
+});
+
+
+
 require __DIR__.'/auth.php';

@@ -190,36 +190,36 @@ public function store(Request $request)
         }
 
     }
-
     public function update(Request $request, User $user)
-    {$auth = Auth::user();
-        $role=$auth->role;
+    {
+        $auth = Auth::user();
+        $role = $auth->role;
 
         if ($role == 0) {
+            // Validate request data
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'role' => 'required|in:0,1,2',
+                'password' => 'nullable|string|min:8',
+            ]);
 
-        // Validate request data
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required|in:0,1,2',
-            'password' => 'nullable|string|min:8',
-        ]);
+            // Update user
+            $user->update($validatedData);
 
-        // Update user
-        $user->update([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'role' => $validatedData['role'],
-            'password' => $validatedData['password'] ? bcrypt($validatedData['password']) : $user->password,
+            // Log activity
+            activity()
+                ->causedBy($auth)
+                ->performedOn($user)
+                ->withProperties(['attributes' => $validatedData])
+                ->log('User updated');
 
-        ]);
-
-        return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
-    } else {
-        return view('AccessDenied');
+            return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+        } else {
+            return view('AccessDenied');
+        }
     }
 
-    }
 
     public function updatePros(Request $request, Pros $prospect)
     {

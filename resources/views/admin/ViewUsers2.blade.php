@@ -1043,5 +1043,5 @@ Admin
 
 @section('routeprospects')
 
-"{{ route('admin.users.index') }}"
+"{{ route('admin.prospects') }}"
 @endsection

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\QualificateurController;
 use App\Http\Controllers\CommercialController;
-
+use App\Http\Controllers\ActivityLogController;
 
     Route::get('/', function () {
         return view('auth.login');
@@ -75,6 +75,10 @@ Route::get('/send-test-email', function () {
 
     return 'Email Sent';
 });
+
+
+// routes/web.php
+Route::get('/activity-logs', [ActivityLogController::class, 'logsindex'])->name('activity.logs');
 
 
 

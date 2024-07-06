@@ -60,28 +60,33 @@ class QualificateurController extends Controller
     }}
 
     public function updatePros(Request $request, Pros $prospect)
-    {$auth = Auth::user();
-        $role=$auth->role;
+    {
+        $authUser = Auth::user();
+        $role = $authUser->role;
 
         if ($role == 1) {
-        // Validate request data
-        $validatedData = $request->validate([
+            // Validate request data
+            $validatedData = $request->validate([
+                'status' => 'required|in:0,1,2,3,4',
+            ]);
 
-            'status' => 'required|in:0,1,2,3,4',
+            // Update Prospect
+            $prospect->update([
+                'status' => $validatedData['status'],
+            ]);
 
-        ]);
+            // Log activity
+            activity()
+                ->causedBy($authUser)
+                ->performedOn($prospect)
+                ->withProperties(['status' => $validatedData['status']])
+                ->log('Prospect status updated');
 
-        // Update Prospect
-        $prospect->update([
-
-            'status' => $validatedData['status'],
-
-        ]);
-
-        return redirect()->route('qualif.prospects')->with('success', 'Prospect updated successfully.');
-    }else {
-        return view('AccessDenied');
-    }}
+            return redirect()->route('qualif.prospects')->with('success', 'Prospect updated successfully.');
+        } else {
+            return view('AccessDenied');
+        }
+    }
 
 
     public function exportPros($format)

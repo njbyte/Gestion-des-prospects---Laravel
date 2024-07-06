@@ -54,31 +54,33 @@ class CommercialController extends Controller
     }}
 
     public function updatePros(Request $request, Pros $prospect)
-    { $auth = Auth::user(); // Fetch authenticated user
+    {
+        $authUser = Auth::user();
+        $role = $authUser->role;
 
+        if ($role == 2) {
+            // Validate request data
+            $validatedData = $request->validate([
+                'status' => 'required|in:0,1,2,3,4',
+            ]);
 
-        $role=$auth->role;
+            // Update Prospect
+            $prospect->update([
+                'status' => $validatedData['status'],
+            ]);
 
-        if ($role ==2) {
-        // Validate request data
-        $validatedData = $request->validate([
+            // Log activity
+            activity()
+                ->causedBy($authUser)
+                ->performedOn($prospect)
+                ->withProperties(['status' => $validatedData['status']])
+                ->log('Prospect status updated');
 
-            'status' => 'required|in:0,1,2,3,4',
-
-        ]);
-
-        // Update Prospect
-        $prospect->update([
-
-            'status' => $validatedData['status'],
-
-        ]);
-
-        return redirect()->route('comm.prospects')->with('success', 'Prospect updated successfully.');
-    }else {
-        return view('AccessDenied');
-    }}
-
+            return redirect()->route('comm.prospects')->with('success', 'Prospect updated successfully.');
+        } else {
+            return view('AccessDenied');
+        }
+    }
 
     public function exportPros($format)
     {

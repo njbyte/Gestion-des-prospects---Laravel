@@ -212,7 +212,7 @@ public function store(Request $request)
                 ->causedBy($auth)
                 ->performedOn($user)
                 ->withProperties(['attributes' => $validatedData])
-                ->log('User updated');
+                ->log('User Update');
 
             return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
         } else {
@@ -222,29 +222,37 @@ public function store(Request $request)
 
 
     public function updatePros(Request $request, Pros $prospect)
-    {
-        $auth = Auth::user();
-        $role=$auth->role;
+{
+    $auth = Auth::user();
+    $role = $auth->role;
 
-        if ($role == 0) {
+    if ($role == 0) {
         // Validate request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $prospect->id,
             'status' => 'required|in:0,1,2,3,4',
-
         ]);
+
+        // Capture the old status before updating
+        $oldStatus = $prospect->status;
 
         // Update Prospect
         $prospect->update([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'status' => $validatedData['status'],
-
         ]);
 
+        // Log the activity
+        activity()
+            ->performedOn($prospect)
+            ->causedBy($auth)
+            ->withProperties(['attributes' => $prospect->getChanges()])
+            ->log("Prospect Update");
+
         return redirect()->route('admin.prospects')->with('success', 'Prospect updated successfully.');
-    }else {
+    } else {
         return view('AccessDenied');
     }}
 

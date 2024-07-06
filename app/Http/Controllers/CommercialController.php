@@ -74,7 +74,7 @@ class CommercialController extends Controller
                 ->causedBy($authUser)
                 ->performedOn($prospect)
                 ->withProperties(['status' => $validatedData['status']])
-                ->log('Prospect status updated');
+                ->log('Prospect Update');
 
             return redirect()->route('comm.prospects')->with('success', 'Prospect updated successfully.');
         } else {

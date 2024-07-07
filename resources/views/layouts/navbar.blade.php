@@ -303,14 +303,13 @@ a:hover {
     <nav class="navbar"><div class="nav-container">
         <img class="navbar-logo" src="{{ asset('assets/logo.png') }}" />
 
-        <div class="nav-links">
+        <div class="nav-links" @yield('stylenav')>
 
         <a class="nav-link" href="{{ route('admin.users.index') }}" style=@yield('hide')>Users</a>
-
-
-            <a class="nav-link" href=@yield('routeprospects')>Prospects</a>
+        <a class="nav-link" href=@yield('routeprospects')>Prospects</a>
+        <a class="nav-link" href="{{ route('activity.logs') }}" style=@yield('hide') >Activity</a>
         </div></div>
-<div class="logout_name">
+<div class="logout_name" @yield('stylenav')>
     <div style="margin-right:25px;">
         <div class="profile_name">@yield('profilename')</div>
         <div class="job">@yield('role')</div>

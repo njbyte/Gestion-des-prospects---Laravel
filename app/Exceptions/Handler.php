@@ -6,6 +6,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -41,7 +42,12 @@ class Handler extends ExceptionHandler
             // Optionally, log the error message
             \Log::error($e);
 
-            // Handle specific exceptions
+            // Handle 404 Not Found Exception
+            if ($e instanceof NotFoundHttpException) {
+                return response()->view('errors.404', [], 404);
+            }
+
+            // Handle other HTTP exceptions
             if ($e instanceof HttpException) {
                 return response()->view('errors.error', [], $e->getStatusCode());
             }

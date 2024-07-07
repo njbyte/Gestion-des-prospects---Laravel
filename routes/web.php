@@ -8,7 +8,11 @@ use App\Http\Controllers\QualificateurController;
 use App\Http\Controllers\CommercialController;
 use App\Http\Controllers\ActivityLogController;
 
-    Route::get('/', function () {
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
+
+Route::get('/', function () {
         return view('auth.login');
     });
 
@@ -20,6 +24,8 @@ use App\Http\Controllers\ActivityLogController;
 
 
 Route::middleware('auth','verified')->group(function () {
+    Route::get('/activity-logs', [ActivityLogController::class, 'logsindex'])->name('activity.logs');
+
     Route::get('/admin/ViewUsers', [AdminController::class, 'index'])->name('admin.users.index');
     Route::get('/admin/ViewUsers/create', [AdminController::class, 'create'])->name('admin.users.create');
     Route::post('/admin/ViewUsers/store', [AdminController::class, 'store'])->name('admin.users.store');
@@ -77,8 +83,7 @@ Route::get('/send-test-email', function () {
 });
 
 
-// routes/web.php
-Route::get('/activity-logs', [ActivityLogController::class, 'logsindex'])->name('activity.logs');
+
 
 
 

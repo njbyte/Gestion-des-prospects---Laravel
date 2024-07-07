@@ -10,7 +10,7 @@ use Spatie\Activitylog\LogOptions;
 
 class Pros extends Model
 {
-    use HasFactory, Notifiable, LogsActivity;
+    use HasFactory, Notifiable;
 
     protected $table = 'prospects';
 
@@ -29,15 +29,9 @@ class Pros extends Model
     /**
      * Get the options for the activity log.
      *
-     * @return LogOptions
+     *
      */
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly(['name', 'email', 'status'])  // Specify attributes to log
-            ->logOnlyDirty()
-            ->setDescriptionForEvent(fn(string $eventName) => "Prospect {$eventName}");
-    }
+
     public function causer()
     {
         return $this->belongsTo(User::class, 'causer_id');

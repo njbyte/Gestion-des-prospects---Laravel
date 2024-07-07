@@ -10,7 +10,7 @@ use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, LogsActivity;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -68,20 +68,8 @@ class User extends Authenticatable
         return "User has been {$eventName}";
     }
 
-    /**
-     * Get the options for the activity log.
-     *
-     * @return LogOptions
-     */
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-        ->logOnly(['name', 'email', 'status'])  // Log only these attributes
-        ->logOnlyDirty()  // Log only attributes that have changed
-        ->setDescriptionForEvent(fn(string $eventName) => "Prospect has been {$eventName}");
 
-    }
-    public function causer()
+     public function causer()
     {
         return $this->belongsTo(User::class, 'causer_id');
     }

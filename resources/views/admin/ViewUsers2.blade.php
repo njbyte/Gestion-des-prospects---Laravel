@@ -612,7 +612,8 @@ body.blur {
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td >
-                           <p class="@if ($user->role == 0) status admin @elseif ($user->role == 1) status qualificateur @else status commercial @endif"> @if ($user->role == 0)
+                           <p class="@if ($user->role == 0) status admin @elseif ($user->role == 1) status qualificateur @else status commercial @endif">
+                            @if ($user->role == 0)
                                 Admin
                             @elseif ($user->role == 1)
                                 Qualificateur

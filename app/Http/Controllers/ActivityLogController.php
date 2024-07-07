@@ -15,9 +15,15 @@ class ActivityLogController extends Controller
     public function logsindex()
     {   $auth = Auth::user();
         $userName = $auth->name;
+        $role = $auth->role;
+
+
+    if ($role == 0) {
         // Fetch all activity logs, latest first
         $logs = Activity::with('causer', 'subject')->latest()->get();
 
         return view('logs', compact('logs','userName'));
-    }
+    } else {
+        return view('AccessDenied');
+    }}
 }

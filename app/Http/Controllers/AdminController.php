@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Log;
 
 
 
+
 class AdminController extends Controller
 {
 
@@ -191,37 +192,50 @@ public function store(Request $request)
 
     }
     public function update(Request $request, User $user)
-    {
-        $auth = Auth::user();
-        $role = $auth->role;
+{
+    $auth = Auth::user();
+    $role = $auth->role;
 
-        if ($role == 0) {
-            // Validate request data
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email,' . $user->id,
-                'role' => 'required|in:0,1,2',
-                'password' => 'nullable|string|min:8',
-            ]);
+    if ($role == 0) {
+        // Validate request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'role' => 'required|in:0,1,2',
+            'password' => 'nullable|string|min:8',
+        ]);
 
-            // Update user
-            $user->update($validatedData);
+        // Capture old values
+        $oldValues = $user->only(['name', 'email', 'role']);
 
-            // Log activity
-            activity()
-                ->causedBy($auth)
-                ->performedOn($user)
-                ->withProperties(['attributes' => $validatedData])
-                ->log('User Update');
-
-            return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+        // Update user
+        if ($request->filled('password')) {
+            $validatedData['password'] = bcrypt($validatedData['password']);
         } else {
-            return view('AccessDenied');
+            unset($validatedData['password']);
         }
+        $user->update($validatedData);
+
+        // Capture new values
+        $newValues = $user->only(['name', 'email', 'role']);
+
+        // Log activity
+        activity()
+            ->useLog($role)
+            ->causedBy($auth)
+            ->performedOn($user)
+            ->withProperties(['old' => $oldValues, 'new' => $newValues])
+            ->log('User Update');
+
+        return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+    } else {
+        return view('AccessDenied');
     }
+}
 
 
-    public function updatePros(Request $request, Pros $prospect)
+
+public function updatePros(Request $request, Pros $prospect)
 {
     $auth = Auth::user();
     $role = $auth->role;
@@ -244,17 +258,24 @@ public function store(Request $request)
             'status' => $validatedData['status'],
         ]);
 
-        // Log the activity
-        activity()
+        // Log the activity with old and new statuses
+        activity()->useLog($role)
             ->performedOn($prospect)
             ->causedBy($auth)
-            ->withProperties(['attributes' => $prospect->getChanges()])
+            ->withProperties([
+                'from' => $oldStatus,
+                'to' => $prospect->status,
+
+            ])
             ->log("Prospect Update");
 
         return redirect()->route('admin.prospects')->with('success', 'Prospect updated successfully.');
     } else {
         return view('AccessDenied');
-    }}
+    }
+}
+
+
 
     public function destroy(User $user)
     {$auth = Auth::user();

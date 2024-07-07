@@ -92,7 +92,7 @@
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
-
+            <img class="navbar-logo" style="height:60px; width:60px;margin-left:40%;" src="{{ asset('assets/logo.png') }}" />
             <h2>{{ __(' Welcome back !') }}</h2>
 
             <!-- Email Address -->

@@ -62,7 +62,8 @@ background: linear-gradient(180deg, rgba(190,196,192,1) 36%, rgba(246,247,249,1)
         }
 
         .navbar-logo {
-            height: 50px;
+            height: 60px;
+            width: 60px;
         }
 
         .navbar-burger {

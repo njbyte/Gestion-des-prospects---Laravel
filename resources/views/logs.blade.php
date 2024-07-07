@@ -562,6 +562,11 @@ const downloadFile = function (data, fileType, fileName = '') {
 {{ $userName }}
 @endsection
 
+@section('routeprospects')
+"{{ route('admin.prospects') }}"
+@endsection
+
+
 @section('role')
 Admin
 @endsection

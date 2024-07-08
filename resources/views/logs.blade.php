@@ -79,14 +79,14 @@
                 <div class="export__file-options">
                     <label>Export As &nbsp; &#10140;</label>
                     <label for="export-file">
-                        <button style="background-color: transparent; border: none;" id="toPDF" class="btn btn-danger">
-                            <img src="{{ asset('images/pdf.png') }}" alt="PDF Icon">
-                        </button>
-                    </label>
+                    <a href="{{ route('admin.logs.export', ['format' => 'pdf']) }}" class="btn btn-danger" style="background-color: transparent; border: none;">
+                         <img src="{{ asset('images/pdf.png') }}" alt="Pdf Icon">
+                    </a>
+</label>
 
                     <label for="export-file">
                         <button style="background-color: transparent; border: none;" class="btn btn-danger">
-                            <a href="{{ route('qualif.prospect.export', ['format' => 'txt']) }}">
+                            <a href="{{ route('admin.logs.export', ['format' => 'txt']) }}">
                                 <img src="{{ asset('images/json.png') }}" alt="JSON Icon">
                             </a>
                         </button>
@@ -94,7 +94,7 @@
 
                     <label for="export-file">
                         <button style="background-color: transparent; border: none;" class="btn btn-danger">
-                            <a href="{{ route('qualif.prospect.export', ['format' => 'csv']) }}">
+                            <a href="{{ route('admin.logs.export', ['format' => 'csv']) }}">
                                 <img src="{{ asset('images/csv.png') }}" alt="CSV Icon">
                             </a>
                         </button>
@@ -102,7 +102,7 @@
 
                     <label for="export-file">
                         <button style="background-color: transparent; border: none;" class="btn btn-danger">
-                            <a href="{{ route('qualif.prospect.export', ['format' => 'xlsx']) }}">
+                            <a href="{{ route('admin.logs.export', ['format' => 'xlsx']) }}">
                                 <img src="{{ asset('images/excel.png') }}" alt="Excel Icon">
                             </a>
                         </button>

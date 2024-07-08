@@ -24,7 +24,10 @@ Route::get('/', function () {
 
 
 Route::middleware('auth','verified')->group(function () {
-    Route::get('/activity-logs', [ActivityLogController::class, 'logsindex'])->name('activity.logs');
+    Route::get('/admin/activity-logs', [ActivityLogController::class, 'logsindex'])->name('activity.logs');
+    Route::get('/admin/activity-logs/export/{format}', [AdminController::class, 'exportLogs'])->name('admin.logs.export');
+    Route::get('/admin/activity-logs/pdf', 'AdminController@showPdfLogs')->name('admin.logs.pdf');
+
 
     Route::get('/admin/ViewUsers', [AdminController::class, 'index'])->name('admin.users.index');
     Route::get('/admin/ViewUsers/create', [AdminController::class, 'create'])->name('admin.users.create');

@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
 use App\Exports\ProspectsExport;
+use App\Exports\LogsExport;
 use PDF;
 use Illuminate\Support\Facades\Log;
+use App\Models\Logs;
 
 
 
@@ -138,6 +140,44 @@ public function store(Request $request)
     }
 }
 
+/* Show the json response
+
+public function store(Request $request)
+    {
+        try {
+            // Validate request data
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'role' => 'required|in:0,1,2',
+                'password' => 'required|string|min:8',
+            ]);
+
+            // Create new user
+            $user = User::create([
+                'name' => $validatedData['name'],
+                'email' => $validatedData['email'],
+                'role' => $validatedData['role'],
+                'password' => bcrypt($validatedData['password']),
+            ]);
+
+            // Check if user was successfully created
+            if ($user) {
+                return response()->json(['message' => 'User created successfully.', 'user' => $user], 201);
+            } else {
+                return response()->json(['error' => 'Failed to create user.'], 500);
+            }
+
+        } catch (QueryException $e) {
+            // Handle specific database errors
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode === 1062) { // MySQL error code for unique constraint violation
+                return response()->json(['error' => 'The email has already been taken.'], 422);
+            } else {
+                return response()->json(['error' => 'Database error: ' . $e->getMessage()], 500);
+            }
+        }
+    } */
 
 
     public function storePros(Request $request)
@@ -429,4 +469,47 @@ public function exportPros($format)
 {
     return view('admin.pdfPros');
 }
+
+
+
+
+public function exportLogs($format)
+    {
+        // Fetch logs from the database
+        $logs = Logs::with(['causer', 'subject'])->orderBy('created_at', 'desc')->get();
+
+        // Handle export based on format
+        switch ($format) {
+            case 'xlsx':
+                return Excel::download(new LogsExport($logs), 'Logs.xlsx');
+            case 'csv':
+                return Excel::download(new LogsExport($logs), 'Logs.csv');
+            case 'txt':
+                $txtContent = '';
+                foreach ($logs as $log) {
+                    $txtContent .= "Log Name: {$log->log_name}, Description: {$log->description}, Created At: {$log->created_at}\n";
+                }
+                $filename = 'logs.txt';
+                return response($txtContent)
+                        ->header('Content-Type', 'text/plain')
+                        ->header('Content-Disposition', 'attachment; filename="'.$filename.'"');
+            case 'pdf':
+                            // Transform logs if necessary (for example, formatting dates or adding labels)
+                            $logs->transform(function ($log) {
+                                // Add any transformations needed here
+                                return $log;
+                            });
+
+                            // Load the 'admin.pdfLogs' view with compacted $logs data
+                            $pdf = PDF::loadView('admin.pdfLogs', compact('logs'));
+
+                            // Return the PDF file for download with the name 'Logs.pdf'
+                            return $pdf->download('Logs.pdf');}
+    }
+
+    public function showPdfLogs()
+    {
+        // Assuming you have a view for displaying PDF logs
+        return view('admin.pdfLogs');
+    }
 }

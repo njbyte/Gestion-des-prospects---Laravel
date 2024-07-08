@@ -125,4 +125,33 @@
                         @if (isset($log->properties['new']))
                             @if (is_array($log->properties['new']))
                                 @foreach ($log->properties['new'] as $attribute => $value)
-
+                                    @if ($attribute == 'role')
+                                        @if ($value == 0)
+                                            {{ $attribute }}: Admin
+                                        @elseif ($value == 1)
+                                            {{ $attribute }}: Qualificateur
+                                        @elseif ($value == 2)
+                                            {{ $attribute }}: Commercial
+                                        @else
+                                            {{ $attribute }}: Unknown Role
+                                        @endif
+                                    @else
+                                        {{ $attribute }}: {{ $value }}
+                                    @endif
+                                    <br>
+                                @endforeach
+                            @else
+                                {{ $log->properties['new'] }}
+                            @endif
+                        @else
+                            N/A
+                        @endif
+                    @endif
+                </td>
+                <td>{{ $log->created_at->format('Y-m-d H:i:s') }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</body>
+</html>

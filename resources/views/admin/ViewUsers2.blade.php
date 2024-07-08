@@ -604,7 +604,7 @@ body.blur {
                         <th class="actions">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="user-table-body">
 
                 @foreach($users as $user)
                     <tr>

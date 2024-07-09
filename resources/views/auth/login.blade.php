@@ -1,4 +1,8 @@
 <x-guest-layout>
+    @section('title', 'Prospects Management')
+    @push('head')
+        <link rel="icon" href="{{ asset('assets/logo.ico') }}" type="image/x-icon">
+    @endpush
     <style>
         body {
             font-family: 'Poppins', sans-serif;

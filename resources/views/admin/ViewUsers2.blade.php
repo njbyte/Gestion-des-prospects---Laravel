@@ -1,6 +1,6 @@
 <div id="loader"></div>
     <div id="content" style="display: none;">
-
+    <link rel="icon" href="{{ url('assets/logo.ico') }}" type="image/x-icon">
 @extends('layouts.navbar')
 
 @section('content')
@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Convert | Export html Table to CSV & EXCEL File</title>
+    <link rel="icon" href="{{ url('assets/logo.ico') }}" type="image/x-icon">
 
 <style>
     .alert {

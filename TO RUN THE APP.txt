@@ -1,0 +1,32 @@
+Requirement TO BE INSTALLED IN YOUR MACHINE :
+Composer
+Node.js
+npm
+PHP
+Xampp/WAMP : for the local server
+
+
+Run this commands in terminal :
+
+1/git clone https://github.com/njbyte/Gestion-des-prospects---Laravel.git
+2/ cd Gestion-des-prospects---Laravel
+2/ composer install
+3/npm install
+4/ cp .env.example .env
+5/ php artisan key:generate
+    Then  Go to /database , and import the "myapp.sql" in your MySql manager (Like phpmyadmin ..)
+    then Setup the .env file
+After that : run this commands in two separated terminals :
+
+1st Terminal : npm run dev
+2nd Termina : php artisan serve
+
+
+N.B : you have to configure your SMTP SERVER in the .env file so that you could reset your password in case !
+
+Enjoy !
+
+
+Made by :**********
+NAJMI SAIFEDDINE
+COMPUTER SCIENCES ENGINEERING STUDENT - ENSAK

@@ -115,7 +115,7 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Log Name <span class="icon-arrow">&UpArrow;</span></th>
+            <th>Log Role <span class="icon-arrow">&UpArrow;</span></th>
             <th>Description <span class="icon-arrow">&UpArrow;</span></th>
             <th>Causer <span class="icon-arrow">&UpArrow;</span></th>
             <th>Target <span class="icon-arrow">&UpArrow;</span></th>
